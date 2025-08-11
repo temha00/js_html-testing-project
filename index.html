@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>JS_HTML_TEST</title>
+        <style>
+            .output {
+                border: 1px solid red;
+                width: 300px;
+                height: 200px;
+                display: block;
+            }
+        </style>
+        <script src="index.js">
+        </script>
+    </head>
+    <body>
+        <label>Textbox</label>
+        <input id="input1"/>
+        <br><br>
+
+        <label>checkbox</label>
+        <input type="checkbox" id="input2"/>
+        <br><br>
+
+        <label>Textarea</label>
+        <textarea id="input3">
+        </textarea>
+        <br><br>
+
+        <label>Select</label>
+        <select id="input4">
+            <Option value="1">Option1</Option>
+            <Option value="2">Option2</Option>
+            <Option value="3">Option3</Option>
+        </select>
+        <br><br>
+
+        <label>Output</label>
+        <div class="output" id="GetVal">
+        </div>
+        <br><br>
+
+        <button type="button" onclick="myOutput()">
+            GetVal
+        </button>
+
+        <button type="button" onclick="myFunc()">
+            SetVal
+        </button>
+    </body>
+</html>
