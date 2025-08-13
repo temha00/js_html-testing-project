@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Contact Book</title>
+        <style>
+            .output {
+                border: 1px solid red;
+                width: 300px;
+                height: 200px;
+                display: block;
+            }
+        </style>
+        <script src="index.js">
+        </script>
+    </head>
+    <body>
+        <label>First Name: </label>
+        <input id="input1"/>
+        <br><br>
+
+        <label>Last Name: </label>
+        <input id="input2"/>
+        <br><br>
+
+        <label>Phone Number: </label>
+        <input id="input3"/>
+        <br><br>
+
+        <label>Address: </label>
+        <input id="input4"/>
+        <br><br>
+
+        <label>Gender: </label>
+        <select id="input5">
+            <Option value="1">Male</Option>
+            <Option value="2">Female</Option>
+        </select>
+        <br><br>
+
+        <label>Output</label>
+        <div class="output" id="output">
+        </div>
+        <br><br>
+
+        <button type="button" onclick="">
+            Reset
+        </button>
+
+        <button type="button" onclick="myFunc()">
+            Add Entry
+        </button>
+    </body>
+</html>
