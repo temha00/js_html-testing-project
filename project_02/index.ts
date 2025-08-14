@@ -1,14 +1,21 @@
 console.log("hello");
 
-interface Contact {
-    firstName?: string;
-    lastName?: string;
-    address?: string;
-    phone?: string;
-    genderId?: string;
+interface Contact{
+    firstName?:string;
+    lastName?:string;
+    address?:string;
+    phone?:string;
+    gender?:string;
 }
 
-let contact: Contact[] = [];
+enum Gender{
+    male = "1",
+    female = "2"
+}
+
+console.log(Gender.male, Gender.female);
+
+let storedValues: Contact[] = [];
 
 function myFunc() {
     let el1 = document.getElementById("input1") as HTMLInputElement;
@@ -16,22 +23,30 @@ function myFunc() {
     let el3 = document.getElementById("input3") as HTMLInputElement;
     let el4 = document.getElementById("input4") as HTMLInputElement;
     let el5 = document.getElementById("input5") as HTMLSelectElement;
-    let genderId = getGenderId(el5);
+    console.log(el1.value);
+    console.log(el2.value);
+    console.log(el3.value);
+    console.log(el4.value);
 
-    setValues({
+    let el5val = getSelectVal(el5);
+    console.log(el5val);
+
+
+    let valuesSent: Contact = {
         firstName: el1.value, 
         lastName: el2.value, 
         address: el3.value, 
         phone: el4.value, 
-        genderId: genderId
-    });
-    console.log(setValues);
+        gender: el5val
+    };
+
+    let values = setValues(valuesSent);
+    console.log(values)
 
     myOutput();
-    console.log(myOutput);
 }
 
-function getGenderId(el5: HTMLSelectElement): string {
+function getSelectVal(el5: HTMLSelectElement): string {
 
     let retval = "";
 
@@ -43,40 +58,42 @@ function getGenderId(el5: HTMLSelectElement): string {
 
     }
 
-    return retval
+    return retval;
 
 }
 
-function setValues(newEntry: Contact) {
+function setValues(valuesSent:any) {
+    
+    let valuesArray:any[] = [valuesSent];
 
-    contact.push(newEntry);
+    for (let i = 0; i < valuesArray.length; i++) {
+        storedValues[i] = valuesArray[i];
+    }
 
+    console.log(storedValues);
+
+    return valuesSent; 
 }
 
 function myOutput() {
-    let output = document.getElementById("output") as HTMLDivElement as Contact;
-    for (let i = 0; contact.length; i++) {
-        output = contact[i];
+    let divEl = document.getElementById("output") as HTMLDivElement;
+    
+    for(let i = 0; i < storedValues.length; i++){
+
+        let genderOutput: string = storedValues[i].gender
+        
+        if(genderOutput == Gender.male){
+            genderOutput = "male"
+        } else {
+            genderOutput = "female"
+        }
+
+        divEl.innerHTML =
+        "Name : " + storedValues[i].firstName + "<br>" +
+        "Surname : " + storedValues[i].lastName + "<br>" +
+        "Address : " + storedValues[i].address + "<br>" +
+        "Phone : " + storedValues[i].phone + "<br>" +
+        "Gender : " + genderOutput;
+
     }
 }
-
-// function setValues(el1val: string, el2val: string, el3val: string, el4val: string) {
-//     const valuesArray = [el1val, el2val, el3val, el4val];
-//     for (let i = 0; i < valuesArray.length; i++) {
-//         storedValues[i] = valuesArray[i];
-//     }
-
-//     console.log(storedValues);
-
-//     return valuesArray;
-// }
-
-// function myOutput() {
-//     let el3 = document.getElementById("output") as HTMLDivElement;
-//     el3.innerHTML =
-//         "Textbox : " + storedValues[0] + "<br>" +
-//         "Checkbox : " + storedValues[1] + "<br>" +
-//         "Textarea : " + storedValues[2] + "<br>" +
-//         "Select : " + storedValues[3];
-
-// }

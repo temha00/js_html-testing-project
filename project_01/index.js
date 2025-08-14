@@ -3,11 +3,11 @@ function myFunc() {
     var el1 = document.getElementById("input1");
     var el2 = document.getElementById("input2");
     var el3 = document.getElementById("input3");
-    var el4 = document.getElementById("input4");
+    var el4_aa = document.getElementById("input4");
     console.log(el1.value);
     console.log(el2.checked);
     console.log(el3.value);
-    var el4val = getSelectVal(el4);
+    var el4val = getSelectVal(el4_aa);
     console.log(el4val);
     var el1val = el1.value;
     var el2valstr;
@@ -22,13 +22,13 @@ function myFunc() {
     console.log(values);
 }
 function getSelectVal(el4) {
-    var retVal = "";
-    for (var i = 0; i < el4.length; i++) {
+    var retval = "";
+    for (var i = 0; i < el4.options.length; i++) {
         if (el4.options[i].selected == true) {
-            retVal = el4.options[i].value;
+            retval = el4.options[i].value;
         }
     }
-    return retVal;
+    return retval;
 }
 var storedValues = [];
 function setValues(el1val, el2val, el3val, el4val) {
