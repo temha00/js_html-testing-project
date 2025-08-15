@@ -26,9 +26,9 @@ function getSelectVal(el5) {
     }
     return retval;
 }
+var arr = [];
 function renderOutput() {
     var outputEl = document.getElementById("output");
-    var arr = [];
     for (var i = 0; i < contacts.length; i++) {
         var item = contacts[i];
         var genderText = "";
@@ -44,14 +44,20 @@ function renderOutput() {
             "Address : " + item.address + "<br>" +
             "Phone : " + item.phone + "<br>" +
             "Gender : " + genderText + "<br>" +
+            "<button type='button' onclick='removeEntry()'>Remove</button>" +
             "<br>");
     }
     console.log(arr);
     outputEl.innerHTML = arr.join("");
 }
+function removeEntry() {
+    contacts.pop();
+    arr.pop();
+    var outputEl = document.getElementById("output");
+}
 function resetEntries() {
     contacts = [];
-    var divEl = document.getElementById("output");
-    divEl.innerHTML = "";
+    var outputEl = document.getElementById("output");
+    outputEl.innerHTML = "";
 }
 //# sourceMappingURL=index.js.map

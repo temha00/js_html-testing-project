@@ -51,11 +51,12 @@ function getSelectVal(el5: HTMLSelectElement): string {
 
 }
 
+let arr: string[] = []
+
 //the function that renders the output
 function renderOutput() {
 
     let outputEl = document.getElementById("output") as HTMLDivElement;
-    let arr: string[] = []
 
     for (let i = 0; i < contacts.length; i++) {
         let item = contacts[i]
@@ -76,10 +77,9 @@ function renderOutput() {
             "Address : " + item.address + "<br>" +
             "Phone : " + item.phone + "<br>" +
             "Gender : " + genderText + "<br>" +
-            // "<button > " + genderText + "<br>" +
+            "<button type='button' onclick='removeEntry()'>Remove</button>" +
             "<br>"
         );
-
 
     }
     console.log(arr)
@@ -88,11 +88,17 @@ function renderOutput() {
 
 }
 
+function removeEntry() {
+    contacts.pop();
+    arr.pop();
+    let outputEl = document.getElementById("output") as HTMLDivElement;
+}
+
 function resetEntries() {
     contacts = [];
 
-    let divEl = document.getElementById("output") as HTMLDivElement;
+    let outputEl = document.getElementById("output") as HTMLDivElement;
 
-    divEl.innerHTML = "";
+    outputEl.innerHTML = "";
 
 }
