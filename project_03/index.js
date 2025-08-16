@@ -1,5 +1,6 @@
 console.log("hello");
 var contacts = [];
+var counter = 0;
 function addEntry() {
     var el1 = document.getElementById("input1");
     var el2 = document.getElementById("input2");
@@ -7,7 +8,9 @@ function addEntry() {
     var el4 = document.getElementById("input4");
     var el5 = document.getElementById("input5");
     var el5val = getSelectVal(el5);
+    counter++;
     var contact = {
+        id: counter,
         firstName: el1.value,
         lastName: el2.value,
         address: el3.value,
@@ -26,9 +29,10 @@ function getSelectVal(el5) {
     }
     return retval;
 }
-var arr = [];
 function renderOutput() {
     var outputEl = document.getElementById("output");
+    var arr = [];
+    arr.push("contacts count = " + contacts.length + "<br>");
     for (var i = 0; i < contacts.length; i++) {
         var item = contacts[i];
         var genderText = "";
@@ -44,20 +48,24 @@ function renderOutput() {
             "Address : " + item.address + "<br>" +
             "Phone : " + item.phone + "<br>" +
             "Gender : " + genderText + "<br>" +
-            "<button type='button' onclick='removeEntry()'>Remove</button>" +
+            "<button type='button' onclick='removeEntry(" + item.id + ")' >Remove</button>" +
             "<br>");
     }
     console.log(arr);
     outputEl.innerHTML = arr.join("");
 }
-function removeEntry() {
-    contacts.pop();
-    arr.pop();
-    var outputEl = document.getElementById("output");
+function removeEntry(itemId) {
+    var arr = [];
+    for (var i = 0; i < contacts.length; i++) {
+        if (contacts[i].id != itemId) {
+            arr.push(contacts[i]);
+        }
+    }
+    contacts = arr;
+    renderOutput();
 }
 function resetEntries() {
     contacts = [];
-    var outputEl = document.getElementById("output");
-    outputEl.innerHTML = "";
+    renderOutput();
 }
 //# sourceMappingURL=index.js.map

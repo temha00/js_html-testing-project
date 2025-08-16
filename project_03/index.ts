@@ -10,7 +10,9 @@ interface Contact {
     genderId?: string;
 }
 
+//
 let contacts: Contact[] = [];
+let counter = 0;
 
 //main function for adding and displaying an entry
 function addEntry() {
@@ -21,7 +23,10 @@ function addEntry() {
     let el5 = document.getElementById("input5") as HTMLSelectElement;
     let el5val = getSelectVal(el5);
 
+    counter++;
+
     let contact: Contact = {
+        id: counter,
         firstName: el1.value,
         lastName: el2.value,
         address: el3.value,
@@ -31,6 +36,7 @@ function addEntry() {
 
     contacts.push(contact);
 
+    //
     renderOutput();
 }
 
@@ -51,12 +57,13 @@ function getSelectVal(el5: HTMLSelectElement): string {
 
 }
 
-let arr: string[] = []
-
 //the function that renders the output
 function renderOutput() {
 
     let outputEl = document.getElementById("output") as HTMLDivElement;
+    let arr: string[] = []
+
+    arr.push("contacts count = " + contacts.length + "<br>");
 
     for (let i = 0; i < contacts.length; i++) {
         let item = contacts[i]
@@ -77,28 +84,46 @@ function renderOutput() {
             "Address : " + item.address + "<br>" +
             "Phone : " + item.phone + "<br>" +
             "Gender : " + genderText + "<br>" +
-            "<button type='button' onclick='removeEntry()'>Remove</button>" +
+            "<button type='button' onclick='removeEntry(" + item.id + ")' >Remove</button>" +
             "<br>"
         );
 
     }
+
     console.log(arr)
 
     outputEl.innerHTML = arr.join("");
 
 }
 
-function removeEntry() {
-    contacts.pop();
-    arr.pop();
-    let outputEl = document.getElementById("output") as HTMLDivElement;
+//
+function removeEntry(itemId: number) {
+
+    let arr: Contact[] = [];
+
+    for (let i = 0; i < contacts.length; i++) {
+        if (contacts[i].id != itemId) {
+            arr.push(contacts[i]);
+        }
+    }
+
+    contacts = arr;
+
+    //
+    renderOutput();
 }
 
+//
 function resetEntries() {
     contacts = [];
 
-    let outputEl = document.getElementById("output") as HTMLDivElement;
-
-    outputEl.innerHTML = "";
+    //
+    renderOutput();
 
 }
+
+// contacts.splice(contacts[i].id - 1);
+// let outputEl = document.getElementById("output") as HTMLDivElement;
+// if (outputEl.hasChildNodes()) {
+//     outputEl.removeChild(outputEl.children[contacts[i].id - 1])
+// }
