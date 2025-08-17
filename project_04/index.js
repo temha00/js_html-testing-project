@@ -116,5 +116,7 @@ function addNewEntry() {
     el3.value = "";
     el4.value = "";
     el5.value = "0";
+    var obj = $('#myModal');
+    obj.modal("show");
 }
 //# sourceMappingURL=index.js.map

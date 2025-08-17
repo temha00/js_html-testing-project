@@ -186,4 +186,9 @@ function addNewEntry() {
     el3.value = "";
     el4.value = "";
     el5.value = "0";
+
+    //show modal
+    let obj = $('#myModal') as any
+    obj.modal("show");
 }
+
