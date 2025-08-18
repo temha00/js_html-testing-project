@@ -14,14 +14,9 @@ interface Contact {
 let contacts: Contact[] = [];
 let counter = 0;
 
-// //
-// function IdFieldCounter(){
-//     document.getElementById("idField") as HTMLInputElement
-// }
-
 //main function for adding and displaying an entry
 function saveEntry() {
-    let idField = document.getElementById("idField") as HTMLInputElement;
+    let idEl = document.getElementById("idField") as HTMLInputElement;
     let el1 = document.getElementById("input1") as HTMLInputElement;
     let el2 = document.getElementById("input2") as HTMLInputElement;
     let el3 = document.getElementById("input3") as HTMLInputElement;
@@ -29,20 +24,38 @@ function saveEntry() {
     let el5 = document.getElementById("input5") as HTMLSelectElement;
     let el5val = getSelectVal(el5);
 
-    counter++;
+    let id = idEl.valueAsNumber;
+    let isNewRec = (id == 0)
 
-    let contact: Contact = {
-        id: counter,
-        firstName: el1.value,
-        lastName: el2.value,
-        address: el3.value,
-        phone: el4.value,
-        genderId: el5val
-    };
+    if (isNewRec) {
 
-    // idField.value = "0"; 
+        counter++;
+        let contact: Contact = {
+            id: counter,
+            firstName: el1.value,
+            lastName: el2.value,
+            address: el3.value,
+            phone: el4.value,
+            genderId: el5val
+        };
 
-    contacts.push(contact);
+        contacts.push(contact);
+    } else {
+        let contact = getContactObj(id)
+        contact.firstName = el1.value;
+        contact.lastName = el2.value;
+        contact.address = el3.value;
+        contact.phone = el4.value;
+        contact.genderId = el5.value;
+    }
+
+
+
+    //
+    hideModal();
+
+    //
+    toastr.success("Contact is saved.");
 
     //
     renderOutput();
@@ -89,7 +102,7 @@ function renderOutput() {
             "Phone : " + item.phone + "<br>" +
             "Gender : " + genderText + "<br>" +
             "<button type='button' onclick='removeEntry(" + item.id + ")' >Remove</button>" +
-            "<button type='button' onclick='editEntry(" + item.id + ")' >Edit</button>" +
+            "<button type='button' onclick='openEditModal(" + item.id + ")' >Edit</button>" +
             "<br>"
         );
 
@@ -153,10 +166,11 @@ function getContactObj(itemId: number) {
     }
 }
 
-function editEntry(itemId: number) {
+function openEditModal(itemId: number) {
     let contact = getContactObj(itemId);
     console.log(contact)
 
+    //
     let idEl = document.getElementById("idField") as HTMLInputElement;
     let el1 = document.getElementById("input1") as HTMLInputElement;
     let el2 = document.getElementById("input2") as HTMLInputElement;
@@ -170,9 +184,12 @@ function editEntry(itemId: number) {
     el3.value = contact.address;
     el4.value = contact.phone;
     el5.value = contact.genderId;
+
+    //
+    showModal();
 }
 
-function addNewEntry() {
+function openNewEntryModal() {
     let idEl = document.getElementById("idField") as HTMLInputElement;
     let el1 = document.getElementById("input1") as HTMLInputElement;
     let el2 = document.getElementById("input2") as HTMLInputElement;
@@ -180,7 +197,7 @@ function addNewEntry() {
     let el4 = document.getElementById("input4") as HTMLInputElement;
     let el5 = document.getElementById("input5") as HTMLSelectElement;
 
-    idEl.value = "";
+    idEl.value = "0";
     el1.value = "";
     el2.value = "";
     el3.value = "";
@@ -188,7 +205,5 @@ function addNewEntry() {
     el5.value = "0";
 
     //show modal
-    let obj = $('#myModal') as any
-    obj.modal("show");
+    showModal();
 }
-

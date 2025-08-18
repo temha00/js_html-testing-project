@@ -2,23 +2,37 @@ console.log("hello");
 var contacts = [];
 var counter = 0;
 function saveEntry() {
-    var idField = document.getElementById("idField");
+    var idEl = document.getElementById("idField");
     var el1 = document.getElementById("input1");
     var el2 = document.getElementById("input2");
     var el3 = document.getElementById("input3");
     var el4 = document.getElementById("input4");
     var el5 = document.getElementById("input5");
     var el5val = getSelectVal(el5);
-    counter++;
-    var contact = {
-        id: counter,
-        firstName: el1.value,
-        lastName: el2.value,
-        address: el3.value,
-        phone: el4.value,
-        genderId: el5val
-    };
-    contacts.push(contact);
+    var id = idEl.valueAsNumber;
+    var isNewRec = (id == 0);
+    if (isNewRec) {
+        counter++;
+        var contact = {
+            id: counter,
+            firstName: el1.value,
+            lastName: el2.value,
+            address: el3.value,
+            phone: el4.value,
+            genderId: el5val
+        };
+        contacts.push(contact);
+    }
+    else {
+        var contact = getContactObj(id);
+        contact.firstName = el1.value;
+        contact.lastName = el2.value;
+        contact.address = el3.value;
+        contact.phone = el4.value;
+        contact.genderId = el5.value;
+    }
+    hideModal();
+    toastr.success("Contact is saved.");
     renderOutput();
 }
 function getSelectVal(el5) {
@@ -44,7 +58,7 @@ function renderOutput() {
             "Phone : " + item.phone + "<br>" +
             "Gender : " + genderText + "<br>" +
             "<button type='button' onclick='removeEntry(" + item.id + ")' >Remove</button>" +
-            "<button type='button' onclick='editEntry(" + item.id + ")' >Edit</button>" +
+            "<button type='button' onclick='openEditModal(" + item.id + ")' >Edit</button>" +
             "<br>");
     }
     console.log(arr);
@@ -87,7 +101,7 @@ function getContactObj(itemId) {
         }
     }
 }
-function editEntry(itemId) {
+function openEditModal(itemId) {
     var contact = getContactObj(itemId);
     console.log(contact);
     var idEl = document.getElementById("idField");
@@ -102,21 +116,21 @@ function editEntry(itemId) {
     el3.value = contact.address;
     el4.value = contact.phone;
     el5.value = contact.genderId;
+    showModal();
 }
-function addNewEntry() {
+function openNewEntryModal() {
     var idEl = document.getElementById("idField");
     var el1 = document.getElementById("input1");
     var el2 = document.getElementById("input2");
     var el3 = document.getElementById("input3");
     var el4 = document.getElementById("input4");
     var el5 = document.getElementById("input5");
-    idEl.value = "";
+    idEl.value = "0";
     el1.value = "";
     el2.value = "";
     el3.value = "";
     el4.value = "";
     el5.value = "0";
-    var obj = $('#myModal');
-    obj.modal("show");
+    showModal();
 }
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index2.js.map
