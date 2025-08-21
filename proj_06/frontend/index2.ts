@@ -115,7 +115,7 @@ function renderOutput() {
         arr.push("<td>" + item.address + "</td>");
         arr.push("<td>" + item.phone + "</td>");
         arr.push("<td>" + genderText + "</td>");
-        arr.push("<td><button type='button' class='btn btn-danger' onclick='removeEntry(" + item.id + ")' >Remove</button></td>");
+        arr.push("<td><button type='button' class='btn btn-danger' onclick='deleteContact(" + item.id + ")' >Remove</button></td>");
         arr.push("<td><button type='button' class='btn btn-primary' onclick='openEditModal(" + item.id + ")' >Edit</button></td>");
         arr.push("</tr>");
 
@@ -141,20 +141,20 @@ function getGenderText(genderId: string) {
 }
 
 //
-function removeEntry(itemId: string) {
+// function removeEntry(itemId: string) {
 
-    let arr: Contact[] = [];
+//     // let arr: Contact[] = [];
 
-    for (let i = 0; i < contacts.length; i++) {
-        if (contacts[i].id != itemId) {
-            arr.push(contacts[i]);
-        }
-    }
+//     // for (let i = 0; i < contacts.length; i++) {
+//     //     if (contacts[i].id != itemId) {
+//     //         arr.push(contacts[i]);
+//     //     }
+//     // }
 
-    contacts = arr;
-    
-    deleteContact(itemId);
-}
+//     // contacts = arr;
+
+//     deleteContact(itemId);
+// }
 
 //
 function resetEntries() {
@@ -281,12 +281,20 @@ function deleteContact(contactId: string): void {
         method: "DELETE",
         success: () => {
             // Remove the deleted contact from local array
-            contacts = contacts.filter(c => c.id !== contactId);
+            let arr: Contact[] = [];
+
+            for (let i = 0; i < contacts.length; i++) {
+                if (contacts[i].id != contactId) {
+                    arr.push(contacts[i]);
+                }
+            }
+
+            contacts = arr;
             renderOutput(); // refresh the table
         },
-        error: (xhr, status, error) => {
-            console.error("Error deleting contact:", error);
-        }
+        // error: (xhr, status, error) => {
+        //     console.error("Error deleting contact:", error);
+        // }
     });
 }
 

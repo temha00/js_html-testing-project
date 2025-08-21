@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace backend;
@@ -14,9 +15,48 @@ public class Program
         public string? Phone { get; set; }
         public string? GenderId { get; set; }
     }
+    private static string filePath = @"C:\_proj\data\ContactData.json";
+
+    public static IResult func_on_get(Contact newContact)
+    {
+        var contacts = LoadContacts();
+
+        int nextId = contacts.Any()
+            ? contacts.Max(c => int.TryParse(c.Id, out var id) ? id : 0) + 1
+            : 1;
+
+        newContact.Id = nextId.ToString();
+        contacts.Add(newContact);
+
+        SaveContacts(contacts);
+
+        return Results.Ok(newContact);
+    }
+
+    //
+    public static List<Contact> LoadContacts()
+    {
+        if (!File.Exists(filePath))
+            return new List<Contact>(); // empty list if file doesn't exist
+
+        var json = File.ReadAllText(filePath);
+
+        // Return empty list if file is empty
+        if (string.IsNullOrWhiteSpace(json))
+            return new List<Contact>();
+
+        return JsonSerializer.Deserialize<List<Contact>>(json) ?? new List<Contact>();
+    }
+
+    // Save contacts back to JSON file
+    public static void SaveContacts(List<Contact> contacts)
+    {
+        var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(filePath, json);
+    }
+
     public static void Main(String[] args)
     {
-
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddCors(options =>
@@ -35,29 +75,6 @@ public class Program
         app.UseCors("AllowAll");
 
         // Example REST endpoints
-        var filePath = @"C:\_proj\data\ContactData.json";
-
-        //
-        List<Contact> LoadContacts()
-        {
-            if (!File.Exists(filePath))
-                return new List<Contact>(); // empty list if file doesn't exist
-
-            var json = File.ReadAllText(filePath);
-
-            // Return empty list if file is empty
-            if (string.IsNullOrWhiteSpace(json))
-                return new List<Contact>();
-
-            return JsonSerializer.Deserialize<List<Contact>>(json) ?? new List<Contact>();
-        }
-
-        // Save contacts back to JSON file
-        void SaveContacts(List<Contact> contacts)
-        {
-            var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
-        }
 
         // GET all
         app.MapGet("/api/contact_list", () =>
@@ -69,21 +86,7 @@ public class Program
         });
 
         // POST new contact object into contact list json
-        app.MapPost("/api/contact_list", (Contact newContact) =>
-        {
-            var contacts = LoadContacts();
-
-            int nextId = contacts.Any()
-                ? contacts.Max(c => int.TryParse(c.Id, out var id) ? id : 0) + 1
-                : 1;
-
-            newContact.Id = nextId.ToString();
-            contacts.Add(newContact);
-
-            SaveContacts(contacts);
-
-            return Results.Ok(newContact);
-        });
+        app.MapPost("/api/contact_list", func_on_get);
 
         // PUT edited contact object into contact list json
         app.MapPut("/api/contact_list/{id}", (string id, Contact updatedContact) =>
@@ -109,19 +112,32 @@ public class Program
             return Results.Ok(contact); // return the updated object
         });
 
-        // DELETE contact by ID
+        //
         app.MapDelete("/api/contact_list/{id}", (string id) =>
         {
-            var contacts = LoadContacts(); // load existing contacts
+            //once kontaktlari al
+            //yeni bos array olustur
+            //kontaktlari loopa sok
+            //id si esit olani yeni listeye koyma, idsi esit olmayanlari yeni listeye koy
+            var json = File.ReadAllText(filePath);
+            var contacts = JsonSerializer.Deserialize<List<Contact>>(json);
+            if (contacts == null)
+                contacts = new List<Contact>();
 
-            var contactToRemove = contacts.FirstOrDefault(c => c.Id == id);
-            if (contactToRemove == null)
-                return Results.NotFound(); // 404 if contact not found
+            var newContacs = new List<Contact>();
 
-            contacts.Remove(contactToRemove);
-            SaveContacts(contacts); // save updated list
+            foreach (var contact in contacts)
+            {
+                Console.WriteLine(contact.Id);
+                if (id != contact.Id)
+                {
+                    newContacs.Add(contact);
+                }
+            }
 
-            return Results.NoContent(); // 204: successful deletion
+            var newJson = JsonSerializer.Serialize(newContacs);
+            File.WriteAllText(filePath, newJson);
+
         });
 
         app.Run("http://127.0.0.1:5300");

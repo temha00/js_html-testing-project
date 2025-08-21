@@ -69,7 +69,7 @@ function renderOutput() {
         arr.push("<td>" + item.address + "</td>");
         arr.push("<td>" + item.phone + "</td>");
         arr.push("<td>" + genderText + "</td>");
-        arr.push("<td><button type='button' class='btn btn-danger' onclick='removeEntry(" + item.id + ")' >Remove</button></td>");
+        arr.push("<td><button type='button' class='btn btn-danger' onclick='deleteContact(" + item.id + ")' >Remove</button></td>");
         arr.push("<td><button type='button' class='btn btn-primary' onclick='openEditModal(" + item.id + ")' >Edit</button></td>");
         arr.push("</tr>");
     }
@@ -89,16 +89,6 @@ function getGenderText(genderId) {
         genderText = "female";
     }
     return genderText;
-}
-function removeEntry(itemId) {
-    var arr = [];
-    for (var i = 0; i < contacts.length; i++) {
-        if (contacts[i].id != itemId) {
-            arr.push(contacts[i]);
-        }
-    }
-    contacts = arr;
-    deleteContact(itemId);
 }
 function resetEntries() {
     contacts = [];
@@ -199,12 +189,15 @@ function deleteContact(contactId) {
         url: "http://127.0.0.1:5300/api/contact_list/" + contactId,
         method: "DELETE",
         success: function () {
-            contacts = contacts.filter(function (c) { return c.id !== contactId; });
+            var arr = [];
+            for (var i = 0; i < contacts.length; i++) {
+                if (contacts[i].id != contactId) {
+                    arr.push(contacts[i]);
+                }
+            }
+            contacts = arr;
             renderOutput();
         },
-        error: function (xhr, status, error) {
-            console.error("Error deleting contact:", error);
-        }
     });
 }
 $(function () {
