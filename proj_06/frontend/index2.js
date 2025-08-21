@@ -21,7 +21,7 @@ function saveEntry() {
             phone: el4.value,
             genderId: el5val
         };
-        contacts.push(contact);
+        addContact(contact);
     }
     else {
         var contact = getContactObj(id);
@@ -30,6 +30,7 @@ function saveEntry() {
         contact.address = el3.value;
         contact.phone = el4.value;
         contact.genderId = el5.value;
+        editContact(contact);
     }
     hideModal();
     toastr.success("Contact is saved.");
@@ -97,7 +98,7 @@ function removeEntry(itemId) {
         }
     }
     contacts = arr;
-    renderOutput();
+    deleteContact(itemId);
 }
 function resetEntries() {
     contacts = [];
@@ -169,9 +170,40 @@ function addContact(newContact) {
         data: JSON.stringify(newContact),
         success: function (addedContact) {
             contacts.push(addedContact);
+            renderOutput();
         },
         error: function (xhr, status, error) {
             console.error("Error posting contact:", error);
+        }
+    });
+}
+function editContact(editedContact) {
+    $.ajax({
+        url: "http://127.0.0.1:5300/api/contact_list/" + editedContact.id,
+        method: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify(editedContact),
+        success: function (updatedContact) {
+            var index = contacts.map(function (c) { return c.id; }).indexOf(updatedContact.id);
+            if (index !== -1) {
+                contacts[index] = updatedContact;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error updating contact:", error);
+        }
+    });
+}
+function deleteContact(contactId) {
+    $.ajax({
+        url: "http://127.0.0.1:5300/api/contact_list/" + contactId,
+        method: "DELETE",
+        success: function () {
+            contacts = contacts.filter(function (c) { return c.id !== contactId; });
+            renderOutput();
+        },
+        error: function (xhr, status, error) {
+            console.error("Error deleting contact:", error);
         }
     });
 }

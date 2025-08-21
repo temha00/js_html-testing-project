@@ -39,7 +39,9 @@ function saveEntry() {
             genderId: el5val
         };
 
-        contacts.push(contact);
+        // contacts.push(contact);
+        //
+        addContact(contact);
     } else {
         let contact = getContactObj(id)
         contact.firstName = el1.value;
@@ -47,9 +49,10 @@ function saveEntry() {
         contact.address = el3.value;
         contact.phone = el4.value;
         contact.genderId = el5.value;
+
+        //
+        editContact(contact);
     }
-
-
 
     //
     hideModal();
@@ -122,7 +125,7 @@ function renderOutput() {
 
     console.log(arr)
 
-    outputEl.innerHTML = arr.join("");
+    outputEl!.innerHTML = arr.join("");
 }
 
 function getGenderText(genderId: string) {
@@ -149,9 +152,8 @@ function removeEntry(itemId: string) {
     }
 
     contacts = arr;
-
-    //
-    renderOutput();
+    
+    deleteContact(itemId);
 }
 
 //
@@ -246,6 +248,7 @@ function addContact(newContact: Contact): void {
         data: JSON.stringify(newContact),
         success: (addedContact: Contact) => {
             contacts.push(addedContact); // add to local array
+            renderOutput();
         },
         error: (xhr, status, error) => {
             console.error("Error posting contact:", error);
@@ -253,6 +256,40 @@ function addContact(newContact: Contact): void {
     });
 }
 
-$(function(){
+function editContact(editedContact: Contact): void {
+    $.ajax({
+        url: "http://127.0.0.1:5300/api/contact_list/" + editedContact.id, // include ID in URL
+        method: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify(editedContact), // send updated object
+        success: (updatedContact: Contact) => {
+            // Replace the contact in local array
+            const index = contacts.map(c => c.id).indexOf(updatedContact.id);
+            if (index !== -1) {
+                contacts[index] = updatedContact;
+            }
+        },
+        error: (xhr, status, error) => {
+            console.error("Error updating contact:", error);
+        }
+    });
+}
+
+function deleteContact(contactId: string): void {
+    $.ajax({
+        url: "http://127.0.0.1:5300/api/contact_list/" + contactId,
+        method: "DELETE",
+        success: () => {
+            // Remove the deleted contact from local array
+            contacts = contacts.filter(c => c.id !== contactId);
+            renderOutput(); // refresh the table
+        },
+        error: (xhr, status, error) => {
+            console.error("Error deleting contact:", error);
+        }
+    });
+}
+
+$(function () {
     getContacts();
 })
