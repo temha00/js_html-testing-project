@@ -226,7 +226,7 @@ function openNewEntryModal() {
 
 function getContacts(): void {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list",
+        url: "http://127.0.0.1:5300/api/contact",
         method: "GET",
         dataType: null,
         success: (parsedContacts: Contact[]) => {
@@ -242,7 +242,7 @@ function getContacts(): void {
 // Add a new contact
 function addContact(newContact: Contact): void {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list",
+        url: "http://127.0.0.1:5300/api/contact",
         method: "POST",
         contentType: "application/json", // important
         data: JSON.stringify(newContact),
@@ -258,7 +258,7 @@ function addContact(newContact: Contact): void {
 
 function editContact(editedContact: Contact): void {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list/" + editedContact.id, // include ID in URL
+        url: "http://127.0.0.1:5300/api/contact/" + editedContact.id, // include ID in URL
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(editedContact), // send updated object
@@ -277,7 +277,7 @@ function editContact(editedContact: Contact): void {
 
 function deleteContact(contactId: string): void {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list/" + contactId,
+        url: "http://127.0.0.1:5300/api/contact/" + contactId,
         method: "DELETE",
         success: () => {
             // Remove the deleted contact from local array

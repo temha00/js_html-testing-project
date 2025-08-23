@@ -140,7 +140,7 @@ function openNewEntryModal() {
 }
 function getContacts() {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list",
+        url: "http://127.0.0.1:5300/api/contact",
         method: "GET",
         dataType: null,
         success: function (parsedContacts) {
@@ -154,7 +154,7 @@ function getContacts() {
 }
 function addContact(newContact) {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list",
+        url: "http://127.0.0.1:5300/api/contact",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(newContact),
@@ -169,7 +169,7 @@ function addContact(newContact) {
 }
 function editContact(editedContact) {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list/" + editedContact.id,
+        url: "http://127.0.0.1:5300/api/contact/" + editedContact.id,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(editedContact),
@@ -186,7 +186,7 @@ function editContact(editedContact) {
 }
 function deleteContact(contactId) {
     $.ajax({
-        url: "http://127.0.0.1:5300/api/contact_list/" + contactId,
+        url: "http://127.0.0.1:5300/api/contact/" + contactId,
         method: "DELETE",
         success: function () {
             var arr = [];
