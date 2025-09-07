@@ -20,10 +20,16 @@ public class MyDbContext : DbContext
     //model contructor
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-          modelBuilder.Entity<contact>().ToTable(nameof(contact));
+        modelBuilder.Entity<contact>().ToTable(nameof(contact));
 
         base.OnModelCreating(modelBuilder);
-    } 
+    }
+
+    // public override int SaveChanges()
+    // {
+    //     throw new InvalidOperationException("Read-only context");
+    // }
+
 
     public DbSet<contact> contacts { get; set; }
 }
