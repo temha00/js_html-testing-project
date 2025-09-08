@@ -10,9 +10,6 @@ interface Contact {
     genderId?: string;
 }
 
-//
-let contacts: Contact[] = [];
-let counter = 0;
 
 //main function for adding and displaying an entry
 function saveEntry() {
@@ -24,33 +21,18 @@ function saveEntry() {
     let el5 = document.getElementById("input5") as HTMLSelectElement;
     let el5val = getSelectVal(el5);
 
-    let id = idEl.value;
-    let isNewRec = (id == "0")
+    let contact: Contact = {
+        id: idEl.value,
+        firstName: el1.value,
+        lastName: el2.value,
+        phone: el3.value,
+        address: el4.value,
+        genderId: el5val
+    };
 
-    if (isNewRec) {
-
-        counter++;
-        let contact: Contact = {
-            id: counter.toString(),
-            firstName: el1.value,
-            lastName: el2.value,
-            address: el3.value,
-            phone: el4.value,
-            genderId: el5val
-        };
-
-        // contacts.push(contact);
-        //
+    if (idEl.value == "0") {
         addContact(contact);
     } else {
-        let contact = getContactObj(id)
-        contact.firstName = el1.value;
-        contact.lastName = el2.value;
-        contact.address = el3.value;
-        contact.phone = el4.value;
-        contact.genderId = el5.value;
-
-        //
         editContact(contact);
     }
 
@@ -60,8 +42,6 @@ function saveEntry() {
     //
     toastr.success("Contact is saved.");
 
-    //
-    renderOutput();
 }
 
 //get the value that is given to the option on the html
@@ -83,7 +63,7 @@ function getSelectVal(el5: HTMLSelectElement): string {
 
 
 //the function that renders the output
-function renderOutput() {
+function renderOutput(contacts: Contact[]) {
 
     let outputEl = document.getElementById("output") as HTMLDivElement;
     let arr: string[] = []
@@ -112,8 +92,8 @@ function renderOutput() {
         arr.push("<td>" + item.id + "</td>");
         arr.push("<td>" + item.firstName + "</td>");
         arr.push("<td>" + item.lastName + "</td>");
-        arr.push("<td>" + item.address + "</td>");
         arr.push("<td>" + item.phone + "</td>");
+        arr.push("<td>" + item.address + "</td>");
         arr.push("<td>" + genderText + "</td>");
         arr.push("<td><button type='button' class='btn btn-danger' onclick='deleteContact(" + item.id + ")' >Remove</button></td>");
         arr.push("<td><button type='button' class='btn btn-primary' onclick='openEditModal(" + item.id + ")' >Edit</button></td>");
@@ -156,51 +136,62 @@ function getGenderText(genderId: string) {
 //     deleteContact(itemId);
 // }
 
+
+
 //
 function resetEntries() {
-    contacts = [];
+    // localContacts = [];
 
-    //is this correct?
-    counter = 0;
+    // //is this correct?
+    // counter = 0;
 
-    let idFieldResetEntries = document.getElementById("idField") as HTMLInputElement;
-    idFieldResetEntries.value = "0";
+    // let idFieldResetEntries = document.getElementById("idField") as HTMLInputElement;
+    // idFieldResetEntries.value = "0";
 
-    //
-    renderOutput();
+    // //
+    // renderOutput();
 
 }
 
-function getContactObj(itemId: string) {
-    for (let i = 0; i < contacts.length; i++) {
-        if (itemId == contacts[i].id) {
-            return contacts[i];
-        }
-    }
-}
 
 function openEditModal(itemId: string) {
-    let contact = getContactObj(itemId);
-    console.log(contact)
 
-    //
-    let idEl = document.getElementById("idField") as HTMLInputElement;
-    let el1 = document.getElementById("input1") as HTMLInputElement;
-    let el2 = document.getElementById("input2") as HTMLInputElement;
-    let el3 = document.getElementById("input3") as HTMLInputElement;
-    let el4 = document.getElementById("input4") as HTMLInputElement;
-    let el5 = document.getElementById("input5") as HTMLSelectElement;
+    $.ajax({
+        url: "http://127.0.0.1:5300/api/contact",
+        method: "GET",
+        dataType: null,
+        success: (contacts: Contact[]) => {
 
-    idEl.value = "" + contact.id;
-    el1.value = contact.firstName;
-    el2.value = contact.lastName;
-    el3.value = contact.address;
-    el4.value = contact.phone;
-    el5.value = contact.genderId;
+            let contact = contacts.filter(x=>x.id ==itemId)[0];
+            console.log(contact)
 
-    $(document).find(".modal-title").text("Edit Contact")
-    //
-    showModal();
+            //
+            let idEl = document.getElementById("idField") as HTMLInputElement;
+            let el1 = document.getElementById("input1") as HTMLInputElement;
+            let el2 = document.getElementById("input2") as HTMLInputElement;
+            let el3 = document.getElementById("input3") as HTMLInputElement;
+            let el4 = document.getElementById("input4") as HTMLInputElement;
+            let el5 = document.getElementById("input5") as HTMLSelectElement;
+
+            idEl.value = "" + contact.id;
+            el1.value = contact.firstName;
+            el2.value = contact.lastName;
+            el3.value = contact.phone;
+            el4.value = contact.address;
+            el5.value = contact.genderId;
+
+            $(document).find(".modal-title").text("Edit Contact")
+
+            //
+            showModal();
+
+        },
+        error: (xhr, status, error) => {
+            console.error("Error fetching contacts:", error);
+        }
+    });
+
+
 }
 
 function openNewEntryModal() {
@@ -224,14 +215,13 @@ function openNewEntryModal() {
     showModal();
 }
 
-function getContacts(): void {
+function refreshContacts(): void {
     $.ajax({
         url: "http://127.0.0.1:5300/api/contact",
         method: "GET",
         dataType: null,
-        success: (parsedContacts: Contact[]) => {
-            contacts = parsedContacts;
-            renderOutput();
+        success: (contactsOnServer: Contact[]) => {
+            renderOutput(contactsOnServer);
         },
         error: (xhr, status, error) => {
             console.error("Error fetching contacts:", error);
@@ -246,9 +236,8 @@ function addContact(newContact: Contact): void {
         method: "POST",
         contentType: "application/json", // important
         data: JSON.stringify(newContact),
-        success: (addedContact: Contact) => {
-            contacts.push(addedContact); // add to local array
-            renderOutput();
+        success: () => {
+            refreshContacts()
         },
         error: (xhr, status, error) => {
             console.error("Error posting contact:", error);
@@ -262,12 +251,8 @@ function editContact(editedContact: Contact): void {
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(editedContact), // send updated object
-        success: (updatedContact: Contact) => {
-            // Replace the contact in local array
-            const index = contacts.map(c => c.id).indexOf(updatedContact.id);
-            if (index !== -1) {
-                contacts[index] = updatedContact;
-            }
+        success: () => {
+            refreshContacts()
         },
         error: (xhr, status, error) => {
             console.error("Error updating contact:", error);
@@ -280,24 +265,14 @@ function deleteContact(contactId: string): void {
         url: "http://127.0.0.1:5300/api/contact/" + contactId,
         method: "DELETE",
         success: () => {
-            // Remove the deleted contact from local array
-            let arr: Contact[] = [];
-
-            for (let i = 0; i < contacts.length; i++) {
-                if (contacts[i].id != contactId) {
-                    arr.push(contacts[i]);
-                }
-            }
-
-            contacts = arr;
-            renderOutput(); // refresh the table
+            refreshContacts()
         },
-        // error: (xhr, status, error) => {
-        //     console.error("Error deleting contact:", error);
-        // }
+        error: (xhr, status, error) => {
+            console.error("Error delete contact:", error);
+        }
     });
 }
 
 $(function () {
-    getContacts();
+    refreshContacts();
 })
