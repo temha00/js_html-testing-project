@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@types/jquery": "^3.5.32"
+  },
+  "dependencies": {
+    "@types/popper.js": "^1.11.0",
+    "bootstrap": "^5.3.7",
+    "jquery": "^3.7.1",
+    "popper.js": "^1.16.1"
+  }
+}
