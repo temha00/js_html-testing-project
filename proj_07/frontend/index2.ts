@@ -66,46 +66,97 @@ class ContactFuncs_Cls {
     renderOutput(contacts: Contact[]) {
 
         let outputEl = document.getElementById("output") as HTMLDivElement;
-        let arr: string[] = []
 
-        arr.push("<div class='x-outer'>");
-        arr.push("contacts count = " + contacts.length + "<br>");
+        if(outputEl != null){
+            outputEl.innerHTML = "";
+        }
 
-        arr.push("<table class='table table-bordered table-striped table-hover' >");
-        arr.push("<tr>");
-        arr.push("<th><b> Id </th>");
-        arr.push("<th><b> First Name </th>");
-        arr.push("<th><b> Last Name </th>");
-        arr.push("<th><b> Phone Number </th>");
-        arr.push("<th><b> Address </th>");
-        arr.push("<th><b> Gender </th>");
-        arr.push("<th colspan='2'><b> Remove/Edit Entry </th>");
-        arr.push("</tr>");
+        let outerEl = $("<div clas='x-outer'>").text("contacts count = " + contacts.length)[0]
+        outputEl.appendChild(outerEl);
+
+        let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
+        outerEl.appendChild(elTable);
+
+        let elTableHeaderRow = $("<tr>").get(0);
+        elTable.appendChild(elTableHeaderRow);
+
+        elTableHeaderRow.appendChild($("<th>Id</th>").get(0));
+        elTableHeaderRow.appendChild($("<th>First Name</th>").get(0));
+        elTableHeaderRow.appendChild($("<th>Last Name</th>").get(0));
+        elTableHeaderRow.appendChild($("<th>Phone Number</th>").get(0));
+        elTableHeaderRow.appendChild($("<th>Address</th>").get(0));
+        elTableHeaderRow.appendChild($("<th>Gender</th>").get(0));
+        elTableHeaderRow.appendChild($("<th colspan='2'>Remove/Edit Entry</th>").get(0));
 
         for (let i = 0; i < contacts.length; i++) {
-            let item = contacts[i]
 
-            //
+            let item = contacts[i];
+
             let genderText = this.getGenderText(item.genderId);
 
-            //
-            arr.push("<tr>");
-            arr.push("<td>" + item.id + "</td>");
-            arr.push("<td>" + item.firstName + "</td>");
-            arr.push("<td>" + item.lastName + "</td>");
-            arr.push("<td>" + item.phone + "</td>");
-            arr.push("<td>" + item.address + "</td>");
-            arr.push("<td>" + genderText + "</td>");
-            arr.push("<td><button type='button' class='btn btn-danger x-delete' data-id='" + item.id + "' >Remove</button></td>");
-            arr.push("<td><button type='button' class='btn btn-primary x-edit' data-id='" + item.id + "' >Edit</button></td>");
-            arr.push("</tr>");
+            let elTableDataRow = $("<tr>").get(0);
+            elTable.appendChild(elTableDataRow);
+
+            elTableDataRow.appendChild($("<td>" + item.id + "</td>").get(0));
+            elTableDataRow.appendChild($("<td>" + item.firstName + "</td>").get(0));
+            elTableDataRow.appendChild($("<td>" + item.lastName + "</td>").get(0));
+            elTableDataRow.appendChild($("<td>" + item.phone + "</td>").get(0));
+            elTableDataRow.appendChild($("<td>" + item.address + "</td>").get(0));
+            elTableDataRow.appendChild($("<td>" + genderText + "</td>").get(0));            
+
+            let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
+            elButtonDelete.onclick = () => {
+                this.deleteContact(item.id);
+            }
+            elTableDataRow.appendChild(elButtonDelete);
+
+
+            let elButtonEdit = $("<td><button type='button' class='btn btn-primary x-edit'>Edit</td>").get(0);
+            elButtonEdit.onclick = () => {
+                this.openEditModal(item.id);
+            }
+            elTableDataRow.appendChild(elButtonEdit);
 
         }
 
-        arr.push("</table>");
-        arr.push("</div>");
+        // arr.push("<div class='x-outer'>");
+        // arr.push("contacts count = " + contacts.length + "<br>");
 
-        console.log(arr.length)
+        // arr.push("<table class='table table-bordered table-striped table-hover' >");
+        // arr.push("<tr>");
+        // arr.push("<th><b> Id </th>");
+        // arr.push("<th><b> First Name </th>");
+        // arr.push("<th><b> Last Name </th>");
+        // arr.push("<th><b> Phone Number </th>");
+        // arr.push("<th><b> Address </th>");
+        // arr.push("<th><b> Gender </th>");
+        // arr.push("<th colspan='2'><b> Remove/Edit Entry </th>");
+        // arr.push("</tr>");
+
+        // for (let i = 0; i < contacts.length; i++) {
+        //     let item = contacts[i]
+
+        //     //
+        //     let genderText = this.getGenderText(item.genderId);
+
+        //     //
+        //     arr.push("<tr>");
+        //     arr.push("<td>" + item.id + "</td>");
+        //     arr.push("<td>" + item.firstName + "</td>");
+        //     arr.push("<td>" + item.lastName + "</td>");
+        //     arr.push("<td>" + item.phone + "</td>");
+        //     arr.push("<td>" + item.address + "</td>");
+        //     arr.push("<td>" + genderText + "</td>");
+        //     arr.push("<td><button type='button' class='btn btn-danger x-delete' data-id='" + item.id + "' >Remove</button></td>");
+        //     arr.push("<td><button type='button' class='btn btn-primary x-edit' data-id='" + item.id + "' >Edit</button></td>");
+        //     arr.push("</tr>");
+
+        // }
+
+        // arr.push("</table>");
+        // arr.push("</div>");
+
+        // console.log(arr.length)
 
         // outputEl.innerHTML = arr.join("");
         // outputEl.innerHTML =arr.join("");
@@ -121,27 +172,27 @@ class ContactFuncs_Cls {
         //     .text("Hello World 222")
         //     .get(0)
 
-        let template = arr.join("");
-        let el = $(template).get(0)
+        // let template = arr.join("");
+        // let el20 = $(template).get(0)
 
-        let btnDelEls = $(el).find(".x-delete").get()
-        btnDelEls.forEach((btnDelEl) => {
-            let id = btnDelEl.getAttribute("data-id")
-            btnDelEl.onclick = () => {
-                contactFuncs.deleteContact(id);
-            }
-        })
+        // let btnDelEls = $(el20).find(".x-delete").get()
+        // btnDelEls.forEach((btnDelEl) => {
+        //     let id = btnDelEl.getAttribute("data-id")
+        //     btnDelEl.onclick = () => {
+        //         contactFuncs.deleteContact(id);
+        //     }
+        // })
 
-        let btnEditEls = $(el).find(".x-edit").get()
-        btnEditEls.forEach((btnEditEl) => {
-            let id = btnEditEl.getAttribute("data-id")
-            btnEditEl.onclick = () => {
-                contactFuncs.openEditModal(id);
-            }
-        })
+        // let btnEditEls = $(el20).find(".x-edit").get()
+        // btnEditEls.forEach((btnEditEl) => {
+        //     let id = btnEditEl.getAttribute("data-id")
+        //     btnEditEl.onclick = () => {
+        //         contactFuncs.openEditModal(id);
+        //     }
+        // })
 
-        outputEl.innerHTML = ""
-        outputEl.append(el)
+        // outputEl.innerHTML = ""
+        // outputEl.append(el20)
     }
 
     getGenderText(genderId: string) {
