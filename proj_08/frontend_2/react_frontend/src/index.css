@@ -66,3 +66,18 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.btn.btn-test {
+  padding: 20px 50px;
+  font-size: 12px;
+}
+
+.output {
+  border: 1px solid red;
+  width: 500px;
+  height: 300px;
+  display: block;
+  overflow: auto;
+  padding: 5px;
+  font-size: 10px;
+}
