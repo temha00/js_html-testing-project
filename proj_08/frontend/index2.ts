@@ -1,5 +1,6 @@
 console.log("hello");
 
+
 //for creating contact array and objects
 interface Contact {
     id?: string;
@@ -67,7 +68,7 @@ class ContactFuncs_Cls {
 
         let outputEl = document.getElementById("output") as HTMLDivElement;
 
-        if(outputEl != null){
+        if (outputEl != null) {
             outputEl.innerHTML = "";
         }
 
@@ -102,7 +103,7 @@ class ContactFuncs_Cls {
             elTableDataRow.appendChild($("<td>" + item.lastName + "</td>").get(0));
             elTableDataRow.appendChild($("<td>" + item.phone + "</td>").get(0));
             elTableDataRow.appendChild($("<td>" + item.address + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + genderText + "</td>").get(0));            
+            elTableDataRow.appendChild($("<td>" + genderText + "</td>").get(0));
 
             let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
             elButtonDelete.onclick = () => {
@@ -300,11 +301,18 @@ class ContactFuncs_Cls {
 
     // Add a new contact
     addContact(newContact: Contact): void {
+
+        let reqData = {
+            action: "save",
+            contact: newContact,
+        }
+ 
+
         $.ajax({
             url: "http://127.0.0.1:5300/api/contact",
             method: "POST",
             contentType: "application/json", // important
-            data: JSON.stringify(newContact),
+            data: JSON.stringify(reqData),
             success: () => {
                 this.refreshContacts()
             },

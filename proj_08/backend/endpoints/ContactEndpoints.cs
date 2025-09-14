@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Dto;
 using PgSql_Data;
+using Cmm;
 
 public static class ContactEndpoints
 {
-
     private static string connstr
     {
         get
@@ -14,6 +14,38 @@ public static class ContactEndpoints
             return connstr;
         }
     }
+
+    public class ReqData_save : ReqData_cmm
+    {
+        public Contact? Contact { get; set; }
+    }
+    public class RespData_save : RespData_cmm
+    {
+        public Object? Data { get; set; }
+    }
+
+    public static RespData_save save(ReqData_save model)
+    {
+
+        var newContact = model.Contact;
+
+        using (var _db = new MyDbContext(connstr))
+        {
+            var addContact = new contact();
+
+            addContact.first_name = newContact.FirstName;
+            addContact.last_name = newContact.LastName;
+            addContact.phone = newContact.Phone;
+            addContact.address = newContact.Address;
+            addContact.gender_id = CmmHelper.ToInt32(newContact.GenderId);
+
+            _db.contacts.Add(addContact);
+            _db.SaveChanges();
+
+            return new RespData_save() { Data = "OK" };
+        }
+    }
+
 
     //end points
 
@@ -70,7 +102,7 @@ public static class ContactEndpoints
 
         using (var _db = new MyDbContext(connstr))
         {
-     
+
             var contact = _db.contacts.Where(c => c.pk_id == int.Parse(id)).FirstOrDefault();
 
             contact.first_name = updatedContact.FirstName;
@@ -102,7 +134,7 @@ public static class ContactEndpoints
 
             _db.contacts.Remove(contact);
             _db.SaveChanges();
- 
+
         }
 
         return Results.Ok();
