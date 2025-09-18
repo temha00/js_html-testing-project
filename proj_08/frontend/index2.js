@@ -18,12 +18,7 @@ var ContactFuncs_Cls = (function () {
             address: el4.value,
             genderId: el5val
         };
-        if (idEl.value == "0") {
-            this.addContact(contact);
-        }
-        else {
-            this.editContact(contact);
-        }
+        this.add_or_edit_Contact(contact);
         hideModal();
         toastr.success("Contact is saved.");
     };
@@ -153,11 +148,11 @@ var ContactFuncs_Cls = (function () {
             }
         });
     };
-    ContactFuncs_Cls.prototype.addContact = function (newContact) {
+    ContactFuncs_Cls.prototype.add_or_edit_Contact = function (contact_add_or_edit) {
         var _this = this;
         var reqData = {
             action: "save",
-            contact: newContact,
+            contact: contact_add_or_edit,
         };
         $.ajax({
             url: "http://127.0.0.1:5300/api/contact",
@@ -169,25 +164,6 @@ var ContactFuncs_Cls = (function () {
             },
             error: function (xhr, status, error) {
                 console.error("Error posting contact:", error);
-            }
-        });
-    };
-    ContactFuncs_Cls.prototype.editContact = function (editedContact) {
-        var _this = this;
-        var reqData = {
-            action: "edit",
-            contact: editedContact,
-        };
-        $.ajax({
-            url: "http://127.0.0.1:5300/api/contact",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(reqData),
-            success: function () {
-                _this.refreshContacts();
-            },
-            error: function (xhr, status, error) {
-                console.error("Error updating contact:", error);
             }
         });
     };

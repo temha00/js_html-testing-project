@@ -31,12 +31,14 @@ class ContactFuncs_Cls {
             genderId: el5val
         };
 
-        if (idEl.value == "0") {
-            this.addContact(contact);
-        } else {
-            this.editContact(contact);
-        }
+        this.add_or_edit_Contact(contact);
 
+        // if (idEl.value == "0") {
+        //     this.add_or_edit_Contact(contact);
+        // } else {
+        //     this.editContact(contact);
+        // }
+        
         //
         hideModal();
 
@@ -299,12 +301,12 @@ class ContactFuncs_Cls {
         });
     }
 
-    // Add a new contact
-    addContact(newContact: Contact): void {
+    // Add a new contact or edit an existing contact
+    add_or_edit_Contact(contact_add_or_edit: Contact): void {
 
         let reqData = {
             action: "save",
-            contact: newContact,
+            contact: contact_add_or_edit,
         }
  
 
@@ -322,26 +324,26 @@ class ContactFuncs_Cls {
         });
     }
 
-    editContact(editedContact: Contact): void {
+    // editContact(editedContact: Contact): void {
         
-        let reqData = {
-            action: "edit",
-            contact: editedContact,
-        }
+    //     let reqData = {
+    //         action: "edit",
+    //         contact: editedContact,
+    //     }
 
-        $.ajax({
-            url: "http://127.0.0.1:5300/api/contact", // include ID in URL
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(reqData), // send updated object
-            success: () => {
-                this.refreshContacts()
-            },
-            error: (xhr, status, error) => {
-                console.error("Error updating contact:", error);
-            }
-        });
-    }
+    //     $.ajax({
+    //         url: "http://127.0.0.1:5300/api/contact", // include ID in URL
+    //         method: "POST",
+    //         contentType: "application/json",
+    //         data: JSON.stringify(reqData), // send updated object
+    //         success: () => {
+    //             this.refreshContacts()
+    //         },
+    //         error: (xhr, status, error) => {
+    //             console.error("Error updating contact:", error);
+    //         }
+    //     });
+    // }
 
     deleteContact(contactId: string): void {
         

@@ -56,56 +56,81 @@ public static class ContactEndpoints
 
     public static RespData_save save(ReqData_save model)
     {
-
-        var newContact = model.Contact;
-
-        using (var _db = new MyDbContext(connstr))
+        if (model.Contact.Id == "0")
         {
-            var addContact = new contact();
 
-            addContact.first_name = newContact.FirstName;
-            addContact.last_name = newContact.LastName;
-            addContact.phone = newContact.Phone;
-            addContact.address = newContact.Address;
-            addContact.gender_id = CmmHelper.ToInt32(newContact.GenderId);
+            var newContact = model.Contact;
 
-            _db.contacts.Add(addContact);
-            _db.SaveChanges();
+            using (var _db = new MyDbContext(connstr))
+            {
+                var addContact = new contact();
 
-            return new RespData_save() { Data = "OK" };
+                addContact.first_name = newContact.FirstName;
+                addContact.last_name = newContact.LastName;
+                addContact.phone = newContact.Phone;
+                addContact.address = newContact.Address;
+                addContact.gender_id = CmmHelper.ToInt32(newContact.GenderId);
+
+                _db.contacts.Add(addContact);
+                _db.SaveChanges();
+
+                return new RespData_save() { Data = "OK" };
+            }
+        }
+        else
+        {
+            using (var _db = new MyDbContext(connstr))
+            {
+                var updatedContact = model.Contact;
+                var id = model.Contact.Id;
+
+                var contact = _db.contacts.Where(c => c.pk_id == int.Parse(id)).FirstOrDefault();
+
+                contact.first_name = updatedContact.FirstName;
+                contact.last_name = updatedContact.LastName;
+                contact.phone = updatedContact.Phone;
+                contact.address = updatedContact.Address;
+                contact.gender_id = int.Parse(updatedContact.GenderId);
+
+
+                _db.contacts.Update(contact);
+                _db.SaveChanges();
+
+                return new RespData_save() { Data = "OK" };
+            }
         }
     }
 
-    public class ReqData_edit : ReqData_cmm
-    {
-        public Contact? Contact { get; set; }
-    }
-    public class RespData_edit : RespData_cmm
-    {
-        public Object? Data { get; set; }
-    }
+    // public class ReqData_edit : ReqData_cmm
+    // {
+    //     public Contact? Contact { get; set; }
+    // }
+    // public class RespData_edit : RespData_cmm
+    // {
+    //     public Object? Data { get; set; }
+    // }
 
-    public static RespData_edit edit(string id, ReqData_edit model)
-    {
-        using (var _db = new MyDbContext(connstr))
-        {
-            var updatedContact = model.Contact;
+    // public static RespData_edit edit(string id, ReqData_edit model)
+    // {
+    //     using (var _db = new MyDbContext(connstr))
+    //     {
+    //         var updatedContact = model.Contact;
 
-            var contact = _db.contacts.Where(c => c.pk_id == int.Parse(id)).FirstOrDefault();
+    //         var contact = _db.contacts.Where(c => c.pk_id == int.Parse(id)).FirstOrDefault();
 
-            contact.first_name = updatedContact.FirstName;
-            contact.last_name = updatedContact.LastName;
-            contact.phone = updatedContact.Phone;
-            contact.address = updatedContact.Address;
-            contact.gender_id = int.Parse(updatedContact.GenderId);
+    //         contact.first_name = updatedContact.FirstName;
+    //         contact.last_name = updatedContact.LastName;
+    //         contact.phone = updatedContact.Phone;
+    //         contact.address = updatedContact.Address;
+    //         contact.gender_id = int.Parse(updatedContact.GenderId);
 
 
-            _db.contacts.Update(contact);
-            _db.SaveChanges();
+    //         _db.contacts.Update(contact);
+    //         _db.SaveChanges();
 
-            return new RespData_edit() { Data = "OK" };
-        }
-    }
+    //         return new RespData_edit() { Data = "OK" };
+    //     }
+    // }
 
     public class ReqData_delete : ReqData_cmm
     {

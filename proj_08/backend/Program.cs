@@ -52,13 +52,13 @@ public class Program
                     var respData = ContactEndpoints.save(model);
                     return Results.Ok(respData);
                 }
-                else if (baseModel.action == "edit")
-                {
-                    var model = JsonConvert.DeserializeObject<ContactEndpoints.ReqData_edit>(bodyAsString);
-                    var id = model.Contact.Id;
-                    var respData = ContactEndpoints.edit(id, model);
-                    return Results.Ok(respData);
-                }
+                // else if (baseModel.action == "edit")
+                // {
+                //     var model = JsonConvert.DeserializeObject<ContactEndpoints.ReqData_edit>(bodyAsString);
+                //     var id = model.Contact.Id;
+                //     var respData = ContactEndpoints.edit(id, model);
+                //     return Results.Ok(respData);
+                // }
                 else if (baseModel.action == "delete")
                 {
                     var model = JsonConvert.DeserializeObject<ContactEndpoints.ReqData_delete>(bodyAsString);
