@@ -323,11 +323,17 @@ class ContactFuncs_Cls {
     }
 
     editContact(editedContact: Contact): void {
+        
+        let reqData = {
+            action: "edit",
+            contact: editedContact,
+        }
+
         $.ajax({
-            url: "http://127.0.0.1:5300/api/contact/" + editedContact.id, // include ID in URL
-            method: "PUT",
+            url: "http://127.0.0.1:5300/api/contact", // include ID in URL
+            method: "POST",
             contentType: "application/json",
-            data: JSON.stringify(editedContact), // send updated object
+            data: JSON.stringify(reqData), // send updated object
             success: () => {
                 this.refreshContacts()
             },
@@ -338,10 +344,17 @@ class ContactFuncs_Cls {
     }
 
     deleteContact(contactId: string): void {
+        
+        let reqData = {
+            action: "delete",
+            id: contactId
+        }
 
         $.ajax({
-            url: "http://127.0.0.1:5300/api/contact/" + contactId,
-            method: "DELETE",
+            url: "http://127.0.0.1:5300/api/contact",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(reqData),
             success: () => {
                 this.refreshContacts()
             },

@@ -155,11 +155,15 @@ var ContactFuncs_Cls = (function () {
     };
     ContactFuncs_Cls.prototype.addContact = function (newContact) {
         var _this = this;
+        var reqData = {
+            action: "save",
+            contact: newContact,
+        };
         $.ajax({
             url: "http://127.0.0.1:5300/api/contact",
             method: "POST",
             contentType: "application/json",
-            data: JSON.stringify(newContact),
+            data: JSON.stringify(reqData),
             success: function () {
                 _this.refreshContacts();
             },
@@ -170,11 +174,15 @@ var ContactFuncs_Cls = (function () {
     };
     ContactFuncs_Cls.prototype.editContact = function (editedContact) {
         var _this = this;
+        var reqData = {
+            action: "edit",
+            contact: editedContact,
+        };
         $.ajax({
-            url: "http://127.0.0.1:5300/api/contact/" + editedContact.id,
-            method: "PUT",
+            url: "http://127.0.0.1:5300/api/contact",
+            method: "POST",
             contentType: "application/json",
-            data: JSON.stringify(editedContact),
+            data: JSON.stringify(reqData),
             success: function () {
                 _this.refreshContacts();
             },
@@ -185,9 +193,15 @@ var ContactFuncs_Cls = (function () {
     };
     ContactFuncs_Cls.prototype.deleteContact = function (contactId) {
         var _this = this;
+        var reqData = {
+            action: "delete",
+            id: contactId
+        };
         $.ajax({
-            url: "http://127.0.0.1:5300/api/contact/" + contactId,
-            method: "DELETE",
+            url: "http://127.0.0.1:5300/api/contact",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(reqData),
             success: function () {
                 _this.refreshContacts();
             },

@@ -1,4 +1,5 @@
 using Cmm;
+using Dto;
 using Newtonsoft.Json;
 
 namespace backendProg;
@@ -28,12 +29,12 @@ public class Program
 
         //
         app.MapGet("/api/contact", ContactEndpoints.get);
-        app.MapPost("/api/contact", ContactEndpoints.post);
-        app.MapPut("/api/contact/{id}", ContactEndpoints.put);
-        app.MapDelete("/api/contact/{id}", ContactEndpoints.delete);
+        // app.MapPost("/api/contact", ContactEndpoints.post);
+        // app.MapPut("/api/contact/{id}", ContactEndpoints.put);
+        // app.MapDelete("/api/contact/{id}", ContactEndpoints.delete);
 
         // app.MapGet("/api/contact2", ContactEndpoints.mainHandler);
-        app.MapPost("/api/contact2", async (HttpRequest request) =>
+        app.MapPost("/api/contact", async (HttpRequest request) =>
         {
             try
             {
@@ -49,6 +50,19 @@ public class Program
                     //convert action model & call action.
                     var model = JsonConvert.DeserializeObject<ContactEndpoints.ReqData_save>(bodyAsString);
                     var respData = ContactEndpoints.save(model);
+                    return Results.Ok(respData);
+                }
+                else if (baseModel.action == "edit")
+                {
+                    var model = JsonConvert.DeserializeObject<ContactEndpoints.ReqData_edit>(bodyAsString);
+                    var id = model.Contact.Id;
+                    var respData = ContactEndpoints.edit(id, model);
+                    return Results.Ok(respData);
+                }
+                else if (baseModel.action == "delete")
+                {
+                    var model = JsonConvert.DeserializeObject<ContactEndpoints.ReqData_delete>(bodyAsString);
+                    var respData = ContactEndpoints.delete(model.id);
                     return Results.Ok(respData);
                 }
 
