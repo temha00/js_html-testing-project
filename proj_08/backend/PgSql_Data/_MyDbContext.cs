@@ -14,7 +14,8 @@ public class MyDbContext : DbContext
     //model options/configuration
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(this.connstr);
+        // optionsBuilder.UseNpgsql(this.connstr);
+        optionsBuilder.UseSqlServer(this.connstr);
     }
 
     //model contructor
