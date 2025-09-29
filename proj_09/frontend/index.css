@@ -1,0 +1,32 @@
+.output {
+  border: 1px solid red;
+  width: 500px;
+  height: 300px;
+  display: block;
+  overflow: auto;
+  padding: 5px;
+  font-size: 10px;
+}
+
+.toast-message {
+  color: black !important;
+}
+
+.container .x-small {
+  padding: 3px 15px;
+  /* reduce top/bottom, left/right padding */
+  font-size: 10px;
+  /* smaller font */
+}
+
+.modal .x-big {
+  padding: 3px 15px;
+  /* reduce top/bottom, left/right padding */
+  font-size: 15px;
+  /* smaller font */
+}
+
+table th{
+  font-weight: 900;
+  color: red;
+}
