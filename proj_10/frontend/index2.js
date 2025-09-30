@@ -39,6 +39,11 @@ var ContactFuncs_Cls = (function () {
         if (outputEl != null) {
             outputEl.innerHTML = "";
         }
+        var btnReturn = $("<button type=\"button\" class=\"btn x-small btn-secondary\">Return</button>").appendTo(outputEl)[0];
+        btnReturn.onclick = function () {
+            page = 'main';
+            refreshPage();
+        };
         var btnContactRefresh = $("<button type=\"button\" class=\"btn x-small btn-primary\">Refresh</button>").appendTo(outputEl)[0];
         btnContactRefresh.onclick = function () {
             _this.refreshContacts();
@@ -214,10 +219,15 @@ var CompanyFuncs_Cls = (function () {
     };
     CompanyFuncs_Cls.prototype.render_Companies_Output = function (companies) {
         var _this = this;
-        var outputEl = document.getElementById("output_company");
+        var outputEl = document.getElementById("container");
         if (outputEl != null) {
             outputEl.innerHTML = "";
         }
+        var btnReturn = $("<button type=\"button\" class=\"btn x-small btn-secondary\">Return</button>").appendTo(outputEl)[0];
+        btnReturn.onclick = function () {
+            page = 'main';
+            refreshPage();
+        };
         var btnCompanyRefresh = $("<button type=\"button\" class=\"btn x-small btn-primary\">Refresh</button>").appendTo(outputEl)[0];
         btnCompanyRefresh.onclick = function () {
             _this.refreshCompanies();

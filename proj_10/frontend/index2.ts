@@ -79,6 +79,12 @@ class ContactFuncs_Cls {
             outputEl.innerHTML = "";
         }
 
+        let btnReturn = $(`<button type="button" class="btn x-small btn-secondary">Return</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        btnReturn.onclick = () => {
+            page = 'main';
+            refreshPage();
+        }
+
         let btnContactRefresh = $(`<button type="button" class="btn x-small btn-primary">Refresh</button>`).appendTo(outputEl)[0] as HTMLButtonElement
         btnContactRefresh.onclick = () => {
             this.refreshContacts();
@@ -311,10 +317,16 @@ class CompanyFuncs_Cls {
     //the function that renders the output
     render_Companies_Output(companies: Company[]) {
 
-        let outputEl = document.getElementById("output_company") as HTMLDivElement;
+        let outputEl = document.getElementById("container") as HTMLDivElement;
 
         if (outputEl != null) {
             outputEl.innerHTML = "";
+        }
+
+        let btnReturn = $(`<button type="button" class="btn x-small btn-secondary">Return</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        btnReturn.onclick = () => {
+            page = 'main';
+            refreshPage();
         }
 
         let btnCompanyRefresh = $(`<button type="button" class="btn x-small btn-primary">Refresh</button>`).appendTo(outputEl)[0] as HTMLButtonElement
