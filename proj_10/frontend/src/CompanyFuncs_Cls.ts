@@ -12,7 +12,7 @@ class CompanyFuncs_Cls {
         this.add_or_edit_Company(company);
 
         //
-        ($('#myModal2') as any).modal('hide');
+        hideModal2();
 
         //
         toastr.success("Company is saved.");
@@ -22,30 +22,31 @@ class CompanyFuncs_Cls {
     //the function that renders the output
     render_Companies_Output(companies: Company[]) {
 
-        let outputEl = document.getElementById("container") as HTMLDivElement;
+        let outputEl = document.getElementById("output") as HTMLDivElement;
+        outputEl.innerHTML = "";
 
-        if (outputEl != null) {
-            outputEl.innerHTML = "";
-        }
+        cmmHelper.AddPageTitle(outputEl, "Company Page")
 
-        let btnReturn = $(`<button type="button" class="btn x-small btn-secondary">Return</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        let pageContentEl = $(`<div class="page-content">`).appendTo(outputEl)[0] as HTMLLabelElement
+
+        let btnReturn = $(`<button type="button" class="btn x-small btn-secondary">`).text("Back>").appendTo(pageContentEl)[0] as HTMLButtonElement
         btnReturn.onclick = () => {
             page = 'main';
             refreshPage();
         }
 
-        let btnCompanyRefresh = $(`<button type="button" class="btn x-small btn-primary">Refresh</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        let btnCompanyRefresh = $(`<button type="button" class="btn x-small btn-primary">`).text("Refresh").appendTo(pageContentEl)[0] as HTMLButtonElement
         btnCompanyRefresh.onclick = () => {
             this.refreshCompanies();
         }
 
-        let btnCompanyAddNew = $(`<button type="button" class="btn x-small btn-primary" onclick="contactFuncs.openNewEntryModal()">Add New Entry</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        let btnCompanyAddNew = $(`<button type="button" class="btn x-small btn-primary">`).text("Add New Entry").appendTo(pageContentEl)[0] as HTMLButtonElement
         btnCompanyAddNew.onclick = () => {
             this.openNewCompanyEntry();
         }
 
         let outerEl = $("<div class='x-outer'>").text("companies count = " + companies.length)[0]
-        outputEl.appendChild(outerEl);
+        pageContentEl.appendChild(outerEl);
 
         let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
         outerEl.appendChild(elTable);
@@ -106,7 +107,7 @@ class CompanyFuncs_Cls {
                 $(document).find(".modal-title").text("Edit Company");
 
                 //
-                ($('#myModal2') as any).modal('show');
+                showModal2();
             },
             error: (xhr, status, error) => {
                 console.error("Error fetching contacts:", error);
@@ -126,7 +127,7 @@ class CompanyFuncs_Cls {
         $(document).find(".modal-title").text("New Company");
 
         //show modal
-        ($('#myModal2') as any).modal('show');
+        showModal2();
     }
 
     refreshCompanies(): void {

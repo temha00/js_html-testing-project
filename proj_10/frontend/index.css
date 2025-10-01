@@ -1,11 +1,7 @@
-.output {
+.container {
   border: 1px solid red;
-  width: 500px;
-  height: 300px;
-  display: block;
   overflow: auto;
   padding: 5px;
-  font-size: 10px;
 }
 
 .toast-message {
@@ -26,7 +22,20 @@
   /* smaller font */
 }
 
-table th{
+table th {
   font-weight: 900;
   color: red;
+}
+
+.page-title {
+  height: 35px;
+  padding: 2px;
+  margin: 2px;
+  border-width: 2px;
+  border: solid black;
+  background-color: yellowgreen;
+}
+
+.page-content{
+  padding: 3px;
 }

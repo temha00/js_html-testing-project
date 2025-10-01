@@ -1,26 +1,3 @@
-console.log("hello");
-
-
-//for creating contact array and objects
-interface Company {
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    address?: string;
-    phone?: string;
-    genderId?: string;
-}
-
-interface Company {
-    id?: string;
-    companyName?: string;
-}
-
-type PageTypes = 'main' | 'contact' | 'company' | '';
-let page: PageTypes = 'main';
-
-
-
 class ContactFuncs_Cls {
     //main function for adding and displaying an entry
     saveContactEntry() {
@@ -44,7 +21,7 @@ class ContactFuncs_Cls {
         this.add_or_edit_Contact(contact);
 
         //
-        ($('#myModal') as any).modal('hide');
+        hideModal();
 
         //
         toastr.success("Contact is saved.");
@@ -72,30 +49,31 @@ class ContactFuncs_Cls {
     //the function that renders the output
     render_Contacts_Output(contacts: Company[]) {
 
-        let outputEl = document.getElementById("container") as HTMLDivElement;
+        let outputEl = document.getElementById("output") as HTMLDivElement;
+        outputEl.innerHTML = "";
 
-        if (outputEl != null) {
-            outputEl.innerHTML = "";
-        }
+        cmmHelper.AddPageTitle(outputEl, "Contact Page")
 
-        let btnReturn = $(`<button type="button" class="btn x-small btn-secondary">Return</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        let pageContentEl = $(`<div class="page-content">`).appendTo(outputEl)[0] as HTMLLabelElement
+
+        let btnReturn = $(`<button type="button" class="btn x-small btn-secondary">`).text("Back").appendTo(pageContentEl)[0] as HTMLButtonElement
         btnReturn.onclick = () => {
             page = 'main';
             refreshPage();
         }
 
-        let btnContactRefresh = $(`<button type="button" class="btn x-small btn-primary">Refresh</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        let btnContactRefresh = $(`<button type="button" class="btn x-small btn-primary">`).text("Refresh").appendTo(pageContentEl)[0] as HTMLButtonElement
         btnContactRefresh.onclick = () => {
             this.refreshContacts();
         }
 
-        let btnContactAddNew = $(`<button type="button" class="btn x-small btn-primary">Add New Entry</button>`).appendTo(outputEl)[0] as HTMLButtonElement
+        let btnContactAddNew = $(`<button type="button" class="btn x-small btn-primary">`).text("Add New Entry").appendTo(pageContentEl)[0] as HTMLButtonElement
         btnContactAddNew.onclick = () => {
             this.openNewEntryModal();
         }
 
         let outerEl = $("<div class='x-outer'>").text("contacts count = " + contacts.length)[0]
-        outputEl.appendChild(outerEl);
+        pageContentEl.appendChild(outerEl);
 
         let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
         outerEl.appendChild(elTable);
@@ -201,7 +179,7 @@ class ContactFuncs_Cls {
                 $(document).find(".modal-title").text("Edit Contact");
 
                 //
-                ($('#myModal') as any).modal('show');
+                showModal();
             },
             error: (xhr, status, error) => {
                 console.error("Error fetching contacts:", error);
@@ -229,7 +207,7 @@ class ContactFuncs_Cls {
         $(document).find(".modal-title").text("New Contact");
 
         //show modal
-        ($('#myModal') as any).modal('show');
+        showModal();
     }
 
     refreshContacts(): void {
@@ -291,78 +269,3 @@ class ContactFuncs_Cls {
     }
 
 }
-
-
-function render_main_Output() {
-    let outputEl = document.getElementById("container") as HTMLDivElement;
-
-    if (outputEl != null) {
-        outputEl.innerHTML = "";
-    }
-
-    let mainPageName = $(`<label>Main Page</label><br>`).appendTo(outputEl)[0] as HTMLLabelElement
-
-    {
-        let btn = $(`<button type="button" class="btn btn-primary">`).appendTo(outputEl)[0] as HTMLButtonElement
-        btn.onclick = () => {
-            page = 'contact'
-            refreshPage();
-        }
-        btn.innerText = "Contacts"
-    }
-
-    {
-        let btn = $(`<button type="button" class="btn btn-primary">`).appendTo(outputEl)[0] as HTMLButtonElement
-        btn.onclick = () => {
-            page = 'company'
-            refreshPage();
-        }
-        btn.innerText = "Companies"
-    }
-
-    // {
-    //     let btn = $(`<a href='/secondpage.html'> second page </a>`).appendTo(outputEl)[0] as HTMLButtonElement
-    // }
-    // {
-    //     let btn = $(`<button type="button" class="btn btn-primary">`).appendTo(outputEl)[0] as HTMLButtonElement
-    //     btn.onclick = () => {
-    //         console.log("going to second page")
-    //         window.location.href = "/secondpage.html"
-    //     }
-    //     btn.innerText = "Companies"
-    // }
-
-
-}
-
-let contactFuncs = new ContactFuncs_Cls();
-let companyFuncs = new CompanyFuncs_Cls();
-
-
-function refreshPage() {
-    //pages
-    if (page == 'main') {
-        render_main_Output();
-    } else if (page == 'contact') {
-        contactFuncs.refreshContacts();
-    } else if (page == 'company') {
-        companyFuncs.refreshCompanies();
-    }
-}
-
-$(() => {
-
-    let btnSaveEl_Contact = $(document).find(".x-contact-save").get(0)
-    btnSaveEl_Contact.onclick = () => {
-        contactFuncs.saveContactEntry()
-    }
-
-
-    let btnSaveEl_Company = $(document).find(".x-company-save").get(0)
-    btnSaveEl_Company.onclick = () => {
-        companyFuncs.saveCompanyEntry()
-    }
-
-    refreshPage();
-})
-
