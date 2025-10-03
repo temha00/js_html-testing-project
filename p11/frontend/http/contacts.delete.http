@@ -1,0 +1,9 @@
+POST http://127.0.0.1:5300/api/contact2 HTTP/1.1
+
+content-type: application/json
+accept: */*
+
+{
+    "action" : "delete",
+    "contactId" : 11,
+}

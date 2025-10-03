@@ -1,0 +1,41 @@
+.container {
+  border: 1px solid red;
+  overflow: auto;
+  padding: 5px;
+}
+
+.toast-message {
+  color: black !important;
+}
+
+.container .x-small {
+  padding: 3px 15px;
+  /* reduce top/bottom, left/right padding */
+  font-size: 10px;
+  /* smaller font */
+}
+
+.modal .x-big {
+  padding: 3px 15px;
+  /* reduce top/bottom, left/right padding */
+  font-size: 15px;
+  /* smaller font */
+}
+
+table th {
+  font-weight: 900;
+  color: red;
+}
+
+.page-title {
+  height: 35px;
+  padding: 2px;
+  margin: 2px;
+  border-width: 2px;
+  border: solid black;
+  background-color: yellowgreen;
+}
+
+.page-content{
+  padding: 3px;
+}
