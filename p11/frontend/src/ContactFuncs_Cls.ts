@@ -75,50 +75,63 @@ class ContactFuncs_Cls {
         let outerEl = $("<div class='x-outer'>").text("contacts count = " + contacts.length)[0]
         pageContentEl.appendChild(outerEl);
 
-        let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
+        let gridHelper = new GridHelper.MainClass();
+        gridHelper.SetData(contacts)
+        gridHelper.AddColumn("Id", "id");
+        gridHelper.AddColumn("First Name", "firstName");
+        gridHelper.AddColumn("Last Name", "lastName");
+        gridHelper.AddColumn("Phone Number", "phone");
+        gridHelper.AddColumn("Address", "address");
+        gridHelper.AddColumn("Gender", "gender");
+        gridHelper.AddColumn("Remove/Edit", "remove/edit");
+
+        let elTable = gridHelper.renderTable();
         outerEl.appendChild(elTable);
 
-        let elTableHeaderRow = $("<tr>").get(0);
-        elTable.appendChild(elTableHeaderRow);
+        // let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
+        // outerEl.appendChild(elTable);
 
-        elTableHeaderRow.appendChild($("<th>Id</th>").get(0));
-        elTableHeaderRow.appendChild($("<th>First Name</th>").get(0));
-        elTableHeaderRow.appendChild($("<th>Last Name</th>").get(0));
-        elTableHeaderRow.appendChild($("<th>Phone Number</th>").get(0));
-        elTableHeaderRow.appendChild($("<th>Address</th>").get(0));
-        elTableHeaderRow.appendChild($("<th>Gender</th>").get(0));
-        elTableHeaderRow.appendChild($("<th colspan='2'>Remove/Edit Entry</th>").get(0));
+        // let elTableHeaderRow = $("<tr>").get(0);
+        // elTable.appendChild(elTableHeaderRow);
 
-        for (let i = 0; i < contacts.length; i++) {
+        // elTableHeaderRow.appendChild($("<th>Id</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th>First Name</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th>Last Name</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th>Phone Number</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th>Address</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th>Gender</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th colspan='2'>Remove/Edit Entry</th>").get(0));
 
-            let item = contacts[i];
+        // for (let i = 0; i < contacts.length; i++) {
 
-            let genderText = this.getContactGenderText(item.genderId);
+        //     let item = contacts[i];
 
-            let elTableDataRow = $("<tr>").get(0);
-            elTable.appendChild(elTableDataRow);
+        //     let genderText = this.getContactGenderText(item.genderId);
 
-            elTableDataRow.appendChild($("<td>" + item.id + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + item.firstName + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + item.lastName + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + item.phone + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + item.address + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + genderText + "</td>").get(0));
+        //     let elTableDataRow = $("<tr>").get(0);
+        //     elTable.appendChild(elTableDataRow);
 
-            let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
-            elButtonDelete.onclick = () => {
-                this.deleteContact(item.id);
-            }
-            elTableDataRow.appendChild(elButtonDelete);
+        //     elTableDataRow.appendChild($("<td>" + item.id + "</td>").get(0));
+        //     elTableDataRow.appendChild($("<td>" + item.firstName + "</td>").get(0));
+        //     elTableDataRow.appendChild($("<td>" + item.lastName + "</td>").get(0));
+        //     elTableDataRow.appendChild($("<td>" + item.phone + "</td>").get(0));
+        //     elTableDataRow.appendChild($("<td>" + item.address + "</td>").get(0));
+        //     elTableDataRow.appendChild($("<td>" + genderText + "</td>").get(0));
+
+        //     let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
+        //     elButtonDelete.onclick = () => {
+        //         this.deleteContact(item.id);
+        //     }
+        //     elTableDataRow.appendChild(elButtonDelete);
 
 
-            let elButtonEdit = $("<td><button type='button' class='btn btn-primary x-edit'>Edit</td>").get(0);
-            elButtonEdit.onclick = () => {
-                this.openContactEdit(item.id);
-            }
-            elTableDataRow.appendChild(elButtonEdit);
+        //     let elButtonEdit = $("<td><button type='button' class='btn btn-primary x-edit'>Edit</td>").get(0);
+        //     elButtonEdit.onclick = () => {
+        //         this.openContactEdit(item.id);
+        //     }
+        //     elTableDataRow.appendChild(elButtonEdit);
 
-        }
+        // }
 
     }
 
