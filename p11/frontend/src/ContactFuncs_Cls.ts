@@ -83,7 +83,7 @@ class ContactFuncs_Cls {
         gridHelper.AddColumn({ title: "Phone Number", fldName: "phone" });
         gridHelper.AddColumn({ title: "Address", fldName: "address" });
         gridHelper.AddColumn({
-            title: "Gender", funcString: (item:Contact) => {
+            title: "Gender", funcString: (item: Contact) => {
                 let GenderText = this.getContactGenderText(item.genderId);
                 return GenderText;
             }
@@ -169,22 +169,6 @@ class ContactFuncs_Cls {
         return genderText;
     }
 
-    // //
-    // resetEntries() {
-    //     // localContacts = [];
-
-    //     // //is this correct?
-    //     // counter = 0;
-
-    //     // let idFieldResetEntries = document.getElementById("idField") as HTMLInputElement;
-    //     // idFieldResetEntries.value = "0";
-
-    //     // //
-    //     // renderOutput();
-
-    // }
-
-
     openContactEdit(itemId: string) {
 
         $.ajax({
@@ -220,7 +204,6 @@ class ContactFuncs_Cls {
                 console.error("Error fetching contacts:", error);
             }
         });
-
 
     }
 

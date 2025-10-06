@@ -54,7 +54,7 @@ class CompanyFuncs_Cls {
         gridHelper.AddColumn({ title: "Company Id", fldName: "id" });
         gridHelper.AddColumn({ title: "Company Name", fldName: "companyName" });
         gridHelper.AddColumn({
-            title: "Edit", funcEl: (item:Company) : HTMLElement => {
+            title: "Edit", funcEl: (item: Company): HTMLElement => {
                 let el = $("<button type='button' class='btn btn-primary x-edit'>").get(0);
                 el.onclick = () => {
                     this.openCompanyEdit(item.id);
@@ -63,7 +63,7 @@ class CompanyFuncs_Cls {
             }
         });
         gridHelper.AddColumn({
-            title: "Remove", funcEl: (item:Company) : HTMLElement => {
+            title: "Remove", funcEl: (item: Company): HTMLElement => {
                 let el = $("<button type='button' class='btn btn-danger x-delete'>").get(0);
                 el.onclick = () => {
                     this.deleteCompany(item.id);

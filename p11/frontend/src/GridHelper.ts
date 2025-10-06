@@ -1,6 +1,5 @@
 namespace GridHelper {
 
-
     interface Col {
         title?: string,
         fldName?: string,
@@ -46,7 +45,7 @@ namespace GridHelper {
                         let el = col.funcEl(item);
                         el.innerText = col.title;
                         elTableRowData.append(el);
-                    } else if(col.funcString){
+                    } else if (col.funcString) {
                         elTableRowData.innerText = col.funcString(item);
                     } else if (col.fldName) {
                         let value = item[col.fldName];
