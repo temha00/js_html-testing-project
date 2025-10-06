@@ -3,7 +3,9 @@ namespace GridHelper {
 
     interface Col {
         title?: string,
-        fldName?: string;
+        fldName?: string,
+        funcEl?: Function,
+        funcString?: Function;
     }
 
     // type interfaceTypes = 'Contact' | 'Company';
@@ -12,16 +14,13 @@ namespace GridHelper {
 
         private _data: any[]
         private cols: Col[] = [];
+        private buttons: any[];
 
         public SetData(data: any[]) {
             this._data = data
 
         }
-        public AddColumn(title: string, fldName: string) {
-            let col: Col = {
-                title: title,
-                fldName: fldName
-            }
+        public AddColumn(col: Col) {
             this.cols.push(col);
             return this.cols;
         }
@@ -40,10 +39,22 @@ namespace GridHelper {
 
                 console.log(item)
 
-                this.cols.forEach((c) => {
-                    console.log(item[c.fldName]);
-                    let value = item[c.fldName];
-                    let elTableRowData = $("<td>").text(value).get(0) as HTMLTableCellElement;
+                this.cols.forEach((col) => {
+                    let elTableRowData = $("<td>").get(0) as HTMLTableCellElement;
+
+                    if (col.funcEl) {
+                        let el = col.funcEl(item);
+                        el.innerText = col.title;
+                        elTableRowData.append(el);
+                    } else if(col.funcString){
+                        elTableRowData.innerText = col.funcString(item);
+                    } else if (col.fldName) {
+                        let value = item[col.fldName];
+                        elTableRowData.innerText = value;
+                    } else {
+                        elTableRowData.innerText = '$error$';
+                    }
+
                     trEl.appendChild(elTableRowData);
                 });
 

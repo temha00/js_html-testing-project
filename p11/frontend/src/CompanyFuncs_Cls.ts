@@ -48,40 +48,67 @@ class CompanyFuncs_Cls {
         let outerEl = $("<div class='x-outer'>").text("companies count = " + companies.length)[0]
         pageContentEl.appendChild(outerEl);
 
-        let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
+        let gridHelper = new GridHelper.MainClass();
+        gridHelper.SetData(companies);
+
+        gridHelper.AddColumn({ title: "Company Id", fldName: "id" });
+        gridHelper.AddColumn({ title: "Company Name", fldName: "companyName" });
+        gridHelper.AddColumn({
+            title: "Edit", funcEl: (item:Company) : HTMLElement => {
+                let el = $("<button type='button' class='btn btn-primary x-edit'>").get(0);
+                el.onclick = () => {
+                    this.openCompanyEdit(item.id);
+                }
+                return el;
+            }
+        });
+        gridHelper.AddColumn({
+            title: "Remove", funcEl: (item:Company) : HTMLElement => {
+                let el = $("<button type='button' class='btn btn-danger x-delete'>").get(0);
+                el.onclick = () => {
+                    this.deleteCompany(item.id);
+                }
+                return el;
+            }
+        });
+
+        let elTable = gridHelper.renderTable();
         outerEl.appendChild(elTable);
 
-        let elTableHeaderRow = $("<tr>").get(0);
-        elTable.appendChild(elTableHeaderRow);
+        // let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
+        // outerEl.appendChild(elTable);
 
-        elTableHeaderRow.appendChild($("<th>Company Id</th>").get(0));
-        elTableHeaderRow.appendChild($("<th>Company Name</th>").get(0));
-        elTableHeaderRow.appendChild($("<th colspan='2'>Remove/Edit Entry</th>").get(0));
+        // let elTableHeaderRow = $("<tr>").get(0);
+        // elTable.appendChild(elTableHeaderRow);
 
-        for (let i = 0; i < companies.length; i++) {
+        // elTableHeaderRow.appendChild($("<th>Company Id</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th>Company Name</th>").get(0));
+        // elTableHeaderRow.appendChild($("<th colspan='2'>Remove/Edit Entry</th>").get(0));
 
-            let item = companies[i];
+        // for (let i = 0; i < companies.length; i++) {
 
-            let elTableDataRow = $("<tr>").get(0);
-            elTable.appendChild(elTableDataRow);
+        //     let item = companies[i];
 
-            elTableDataRow.appendChild($("<td>" + item.id + "</td>").get(0));
-            elTableDataRow.appendChild($("<td>" + item.companyName + "</td>").get(0));
+        //     let elTableDataRow = $("<tr>").get(0);
+        //     elTable.appendChild(elTableDataRow);
 
-            let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
-            elButtonDelete.onclick = () => {
-                this.deleteCompany(item.id);
-            }
-            elTableDataRow.appendChild(elButtonDelete);
+        //     elTableDataRow.appendChild($("<td>" + item.id + "</td>").get(0));
+        //     elTableDataRow.appendChild($("<td>" + item.companyName + "</td>").get(0));
+
+        //     let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
+        //     elButtonDelete.onclick = () => {
+        //         this.deleteCompany(item.id);
+        //     }
+        //     elTableDataRow.appendChild(elButtonDelete);
 
 
-            let elButtonEdit = $("<td><button type='button' class='btn btn-primary x-edit'>Edit</td>").get(0);
-            elButtonEdit.onclick = () => {
-                this.openCompanyEdit(item.id);
-            }
-            elTableDataRow.appendChild(elButtonEdit);
+        //     let elButtonEdit = $("<td><button type='button' class='btn btn-primary x-edit'>Edit</td>").get(0);
+        //     elButtonEdit.onclick = () => {
+        //         this.openCompanyEdit(item.id);
+        //     }
+        //     elTableDataRow.appendChild(elButtonEdit);
 
-        }
+        // }
 
     }
 
