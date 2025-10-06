@@ -25,7 +25,6 @@ class ContactFuncs_Cls {
 
         //
         toastr.success("Contact is saved.");
-
     }
 
     //get the value that is given to the option on the html
@@ -42,7 +41,6 @@ class ContactFuncs_Cls {
         }
 
         return retval;
-
     }
 
 
@@ -109,52 +107,6 @@ class ContactFuncs_Cls {
 
         let elTable = gridHelper.renderTable();
         outerEl.appendChild(elTable);
-
-        // let elTable = $("<table class='table table-bordered table-striped table-hover'>").get(0)
-        // outerEl.appendChild(elTable);
-
-        // let elTableHeaderRow = $("<tr>").get(0);
-        // elTable.appendChild(elTableHeaderRow);
-
-        // elTableHeaderRow.appendChild($("<th>Id</th>").get(0));
-        // elTableHeaderRow.appendChild($("<th>First Name</th>").get(0));
-        // elTableHeaderRow.appendChild($("<th>Last Name</th>").get(0));
-        // elTableHeaderRow.appendChild($("<th>Phone Number</th>").get(0));
-        // elTableHeaderRow.appendChild($("<th>Address</th>").get(0));
-        // elTableHeaderRow.appendChild($("<th>Gender</th>").get(0));
-        // elTableHeaderRow.appendChild($("<th colspan='2'>Remove/Edit Entry</th>").get(0));
-
-        // for (let i = 0; i < contacts.length; i++) {
-
-        //     let item = contacts[i];
-
-        //     let genderText = this.getContactGenderText(item.genderId);
-
-        //     let elTableDataRow = $("<tr>").get(0);
-        //     elTable.appendChild(elTableDataRow);
-
-        //     elTableDataRow.appendChild($("<td>" + item.id + "</td>").get(0));
-        //     elTableDataRow.appendChild($("<td>" + item.firstName + "</td>").get(0));
-        //     elTableDataRow.appendChild($("<td>" + item.lastName + "</td>").get(0));
-        //     elTableDataRow.appendChild($("<td>" + item.phone + "</td>").get(0));
-        //     elTableDataRow.appendChild($("<td>" + item.address + "</td>").get(0));
-        //     elTableDataRow.appendChild($("<td>" + genderText + "</td>").get(0));
-
-        //     let elButtonDelete = $("<td><button type='button' class='btn btn-danger x-delete'>Remove</td>").get(0);
-        //     elButtonDelete.onclick = () => {
-        //         this.deleteContact(item.id);
-        //     }
-        //     elTableDataRow.appendChild(elButtonDelete);
-
-
-        //     let elButtonEdit = $("<td><button type='button' class='btn btn-primary x-edit'>Edit</td>").get(0);
-        //     elButtonEdit.onclick = () => {
-        //         this.openContactEdit(item.id);
-        //     }
-        //     elTableDataRow.appendChild(elButtonEdit);
-
-        // }
-
     }
 
     getContactGenderText(genderId: string) {

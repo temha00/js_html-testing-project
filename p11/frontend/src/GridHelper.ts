@@ -6,9 +6,7 @@ namespace GridHelper {
         funcEl?: Function,
         funcString?: Function;
     }
-
-    // type interfaceTypes = 'Contact' | 'Company';
-
+    
     export class MainClass {
 
         private _data: any[]
