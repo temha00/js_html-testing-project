@@ -1,23 +1,22 @@
 namespace GridHelper {
 
-    interface Col {
+    interface Col<T> {
         title?: string,
-        fldName?: string,
-        funcEl?: Function,
-        funcString?: Function;
+        fldName?: Extract<keyof T, string>,
+        funcEl?: (item: T) => HTMLElement,
+        funcString?: (item: T) => string;
     }
-    
-    export class MainClass {
 
-        private _data: any[]
-        private cols: Col[] = [];
-        private buttons: any[];
+    export class MainClass<T> {
 
-        public SetData(data: any[]) {
+        private _data: T[]
+        private cols: Col<T>[] = [];
+
+        public SetData(data: T[]) {
             this._data = data
 
         }
-        public AddColumn(col: Col) {
+        public AddColumn(col: Col<T>) {
             this.cols.push(col);
             return this.cols;
         }
@@ -46,7 +45,7 @@ namespace GridHelper {
                     } else if (col.funcString) {
                         elTableRowData.innerText = col.funcString(item);
                     } else if (col.fldName) {
-                        let value = item[col.fldName];
+                        let value = (item as any)[col.fldName];
                         elTableRowData.innerText = value;
                     } else {
                         elTableRowData.innerText = '$error$';

@@ -48,13 +48,13 @@ class CompanyFuncs_Cls {
         let outerEl = $("<div class='x-outer'>").text("companies count = " + companies.length)[0]
         pageContentEl.appendChild(outerEl);
 
-        let gridHelper = new GridHelper.MainClass();
+        let gridHelper = new GridHelper.MainClass<Company>();
         gridHelper.SetData(companies);
 
         gridHelper.AddColumn({ title: "Company Id", fldName: "id" });
         gridHelper.AddColumn({ title: "Company Name", fldName: "companyName" });
         gridHelper.AddColumn({
-            title: "Edit", funcEl: (item: Company): HTMLElement => {
+            title: "Edit", funcEl: (item): HTMLElement => {
                 let el = $("<button type='button' class='btn btn-primary x-edit'>").get(0);
                 el.onclick = () => {
                     this.openCompanyEdit(item.id);
@@ -63,7 +63,7 @@ class CompanyFuncs_Cls {
             }
         });
         gridHelper.AddColumn({
-            title: "Remove", funcEl: (item: Company): HTMLElement => {
+            title: "Remove", funcEl: (item): HTMLElement => {
                 let el = $("<button type='button' class='btn btn-danger x-delete'>").get(0);
                 el.onclick = () => {
                     this.deleteCompany(item.id);

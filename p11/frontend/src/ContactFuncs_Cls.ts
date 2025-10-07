@@ -73,7 +73,7 @@ class ContactFuncs_Cls {
         let outerEl = $("<div class='x-outer'>").text("contacts count = " + contacts.length)[0]
         pageContentEl.appendChild(outerEl);
 
-        let gridHelper = new GridHelper.MainClass();
+        let gridHelper = new GridHelper.MainClass<Contact>();
         gridHelper.SetData(contacts)
         gridHelper.AddColumn({ title: "Id", fldName: "id" });
         gridHelper.AddColumn({ title: "First Name", fldName: "firstName" });
@@ -81,13 +81,13 @@ class ContactFuncs_Cls {
         gridHelper.AddColumn({ title: "Phone Number", fldName: "phone" });
         gridHelper.AddColumn({ title: "Address", fldName: "address" });
         gridHelper.AddColumn({
-            title: "Gender", funcString: (item: Contact) => {
+            title: "Gender", funcString: (item) => {
                 let GenderText = this.getContactGenderText(item.genderId);
                 return GenderText;
             }
         });
         gridHelper.AddColumn({
-            title: "Edit", funcEl: (item: Contact): HTMLElement => {
+            title: "Edit", funcEl: (item) => {
                 let el = $("<button type='button' class='btn btn-primary x-edit'>").get(0);
                 el.onclick = () => {
                     this.openContactEdit(item.id);
@@ -96,7 +96,7 @@ class ContactFuncs_Cls {
             }
         });
         gridHelper.AddColumn({
-            title: "Remove", funcEl: (item: Contact): HTMLElement => {
+            title: "Remove", funcEl: (item) => {
                 let el = $("<button type='button' class='btn btn-danger x-delete'>").get(0);
                 el.onclick = () => {
                     this.deleteContact(item.id);
