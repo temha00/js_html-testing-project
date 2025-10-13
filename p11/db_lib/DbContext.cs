@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MKS.GoliathNet.Common.DataWeb.WEBDATA;
 
-namespace DbContext;
+namespace db_lib;
 
 public class MyDbContext : Microsoft.EntityFrameworkCore.DbContext
 {

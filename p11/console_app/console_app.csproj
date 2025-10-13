@@ -18,4 +18,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\db_lib\db_lib.csproj" />
+  </ItemGroup>
+
 </Project>
