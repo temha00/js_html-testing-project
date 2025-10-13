@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace PgSql_Data;
+namespace db_lib;
 
 public class contact
 {

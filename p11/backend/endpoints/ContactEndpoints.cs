@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Dto;
-using PgSql_Data;
+using db_lib;
 using Cmm;
 
 public static class ContactEndpoints

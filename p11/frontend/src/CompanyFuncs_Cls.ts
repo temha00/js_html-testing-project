@@ -79,12 +79,12 @@ class CompanyFuncs_Cls {
     openCompanyEdit(itemId: string) {
 
         $.ajax({
-            url: "http://127.0.0.1:5300/api/contact",
+            url: "http://127.0.0.1:5300/api/company",
             method: "GET",
             dataType: null,
-            success: (contacts: Company[]) => {
+            success: (companies: Company[]) => {
 
-                let company = contacts.filter(x => x.id == itemId)[0];
+                let company = companies.filter(x => x.id == itemId)[0];
                 console.log(company)
 
                 //

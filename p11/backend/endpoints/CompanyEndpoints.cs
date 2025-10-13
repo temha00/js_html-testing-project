@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using db_lib;
 using Dto;
-using PgSql_Data;
 using Cmm;
 
 public static class CompanyEndpoints
