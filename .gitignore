@@ -30,6 +30,13 @@ obj/
 !.vscode/launch.json
 !.vscode/tasks.json
 
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
 # Logs
 logs
 *.log
