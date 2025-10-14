@@ -57,8 +57,9 @@ public static class CompanyEndpoints
 
                 addCompany.company_name = newCompany.CompanyName;
 
-                _db.companies.Add(addCompany);
-                _db.SaveChanges();
+                var sql = $"insert into company (first_name, last_name, phone, address, gender_id) values ({addCompany.company_name})";
+                var result = _db.Database.ExecuteSqlRaw(sql);
+                Console.WriteLine(result);
 
                 return new RespData_save() { Data = "OK" };
             }
@@ -74,8 +75,9 @@ public static class CompanyEndpoints
 
                 company.company_name = updatedCompany.CompanyName;
 
-                _db.companies.Update(company);
-                _db.SaveChanges();
+                var sql = $"update company set (company_name = {company.company_name}) where pk_id = {id}";
+                var result = _db.Database.ExecuteSqlRaw(sql);
+                Console.WriteLine(result);
 
                 return new RespData_save() { Data = "OK" };
             }
@@ -100,12 +102,12 @@ public static class CompanyEndpoints
             //
             var idInt = Int32.Parse(id);
 
-            var query = _db.companies.Where(x => x.pk_id == idInt);
-            var company = query.FirstOrDefault();
+            //var query = _db.companies.Where(x => x.pk_id == idInt);
+            //var company = query.FirstOrDefault();
 
-            _db.companies.Remove(company);
-            _db.SaveChanges();
-
+            var sql = $"delete from contact where pk_id = {idInt}";
+            var result = _db.Database.ExecuteSqlRaw(sql);
+            Console.WriteLine(result);
         }
 
         return new RespData_delete() { Data = "OK" };

@@ -24,7 +24,7 @@ public class MainApp
         }
         else if (cmd == "t02")
         {
-
+            new Progs.Test02_AhmetTest.MainClass().Execute();
         }
 
 

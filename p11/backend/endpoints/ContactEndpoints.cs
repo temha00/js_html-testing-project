@@ -65,8 +65,9 @@ public static class ContactEndpoints
                 addContact.address = newContact.Address;
                 addContact.gender_id = CmmHelper.ToInt32(newContact.GenderId);
 
-                _db.contacts.Add(addContact);
-                _db.SaveChanges();
+                var sql = $"insert into contact (first_name, last_name, phone, address, gender_id) values ({addContact.first_name},{addContact.last_name},{addContact.phone},{addContact.address},{addContact.gender_id})";
+                var result = _db.Database.ExecuteSqlRaw(sql);
+                Console.WriteLine(result);
 
                 return new RespData_save() { Data = "OK" };
             }
@@ -86,9 +87,9 @@ public static class ContactEndpoints
                 contact.address = updatedContact.Address;
                 contact.gender_id = int.Parse(updatedContact.GenderId);
 
-
-                _db.contacts.Update(contact);
-                _db.SaveChanges();
+                var sql = $"update contact set (first_name = {contact.first_name}, last_name = {contact.last_name}, phone = {contact.phone}, address = {contact.address}, gender_id = {contact.gender_id}) where pk_id = {id}";
+                var result = _db.Database.ExecuteSqlRaw(sql);
+                Console.WriteLine(result);
 
                 return new RespData_save() { Data = "OK" };
             }
@@ -113,11 +114,9 @@ public static class ContactEndpoints
             //
             var idInt = Int32.Parse(id);
 
-            var query = _db.contacts.Where(x => x.pk_id == idInt);
-            var contact = query.FirstOrDefault();
-
-            _db.contacts.Remove(contact);
-            _db.SaveChanges();
+            var sql = $"delete from contact where pk_id = {idInt}";
+            var result = _db.Database.ExecuteSqlRaw(sql);
+            Console.WriteLine(result);
 
         }
 

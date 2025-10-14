@@ -16,10 +16,10 @@ public class _DbContext : DbContext
         optionsBuilder.UseSqlServer(this.connstr);
     }
 
-    //public override int SaveChanges()
-    //{
-    //    throw new InvalidOperationException("Read-only context");
-    //}
+    public override int SaveChanges()
+    {
+        throw new InvalidOperationException("Read-only context");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
