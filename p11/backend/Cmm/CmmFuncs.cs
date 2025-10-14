@@ -1,4 +1,4 @@
-namespace CmdApp;
+namespace Cmm;
 
 public static class CmmFuncs
 {
@@ -9,5 +9,6 @@ public static class CmmFuncs
         // var connstr = @"Server=localhost\SQLEXPRESS;Database=MYPROJ_CONTACT01;Trusted_Connection=True;TrustServerCertificate=True;";
         var connstr = pass;
         return connstr;
+
     }
 }
