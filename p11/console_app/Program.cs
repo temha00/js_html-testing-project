@@ -4,12 +4,6 @@ using Newtonsoft.Json;
 
 namespace CmdApp;
 
-public class LocalItem
-{
-    public int pk_id;
-    public string kurzbez;
-
-}
 public class MainApp
 {
 
@@ -17,7 +11,7 @@ public class MainApp
     {
         Console.WriteLine("Hello, World!");
 
-        var connstr = types.connstr();
+        var connstr = CmmFuncs.connstr();
 
         using (var _db = new _DbContext(connstr))
         {
