@@ -1,3 +1,5 @@
+namespace Cmm;
+
 public static class CmmHelper
 {
     public static int ToInt32(string str)

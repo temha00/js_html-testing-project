@@ -3,6 +3,8 @@ using db_lib;
 using Dto;
 using Cmm;
 
+namespace endpoints;
+
 public static class CompanyEndpoints
 {
     private static string connstr
@@ -21,7 +23,7 @@ public static class CompanyEndpoints
 
     public static List<Company> get()
     {
-        using (var _db = new MyDbContext(connstr))
+        using (var _db = new _DbContext(connstr))
         {
             var query = _db.companies;
 
@@ -59,7 +61,7 @@ public static class CompanyEndpoints
 
             var newCompany = model.Company;
 
-            using (var _db = new MyDbContext(connstr))
+            using (var _db = new _DbContext(connstr))
             {
                 var addCompany = new company();
 
@@ -73,7 +75,7 @@ public static class CompanyEndpoints
         }
         else
         {
-            using (var _db = new MyDbContext(connstr))
+            using (var _db = new _DbContext(connstr))
             {
                 var updatedCompany = model.Company;
                 var id = model.Company.Id;
@@ -102,7 +104,7 @@ public static class CompanyEndpoints
     public static RespData_delete delete(string id)
     {
 
-        using (var _db = new MyDbContext(connstr))
+        using (var _db = new _DbContext(connstr))
         {
 
             //

@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using MKS.GoliathNet.Common.DataWeb.WEBDATA;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace db_lib;
 
-public class MyDbContext : Microsoft.EntityFrameworkCore.DbContext
+public class _DbContext : DbContext
 {
     public string connstr { get; }
 
-    public MyDbContext(string connstr)
+    public _DbContext(string connstr)
     {
         this.connstr = connstr;
     }

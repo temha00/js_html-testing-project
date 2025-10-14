@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <NoWarn>$(NoWarn);CS8981</NoWarn>
+    <RootNamespace>CmdApp</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console_app", "console_app\console_app.csproj", "{5554B362-059C-AA14-16EC-5CAF2F71D038}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cmd_app", "console_app\cmd_app.csproj", "{5554B362-059C-AA14-16EC-5CAF2F71D038}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db_lib", "db_lib\db_lib.csproj", "{EB416DBB-64E9-4CB3-B2C2-7C36BACECBD4}"
 EndProject
@@ -29,6 +29,12 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "frontend", "frontend\", "{B
 		SlnRelativePath = "frontend\"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Core", "01_Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Console", "02_Console", "{6D1703CB-74C8-4527-9D62-A153E2EE7F40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Web", "03_Web", "{6152469E-780A-4AC9-AB3A-64C9876162CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +60,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5554B362-059C-AA14-16EC-5CAF2F71D038} = {6D1703CB-74C8-4527-9D62-A153E2EE7F40}
+		{EB416DBB-64E9-4CB3-B2C2-7C36BACECBD4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2} = {6152469E-780A-4AC9-AB3A-64C9876162CC}
+		{BEC1AF4D-7070-47DE-541E-D6A8B557E3AB} = {6152469E-780A-4AC9-AB3A-64C9876162CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2964BDC1-6389-40CF-83A7-68716D52520D}
