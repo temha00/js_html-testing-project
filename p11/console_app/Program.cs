@@ -11,7 +11,7 @@ public class MainApp
     {
         Console.WriteLine("Hello, World!");
 
-        var connstr = CmmFuncs.connstr();
+        var connstr = CmmFuncs.CmmConnstr();
 
         using (var _db = new _DbContext(connstr))
         {

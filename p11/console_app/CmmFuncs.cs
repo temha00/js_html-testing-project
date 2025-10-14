@@ -2,7 +2,7 @@ namespace CmdApp;
 
 public static class CmmFuncs
 {
-    public static string connstr()
+    public static string CmmConnstr()
     {
         var pass = File.ReadAllText("C:\\creds\\postgresql_pass.txt");
         // var connstr = @"Host=localhost;Database=postgres;Username=postgres;Password=" + pass;
