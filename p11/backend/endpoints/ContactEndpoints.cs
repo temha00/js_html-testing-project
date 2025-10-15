@@ -65,7 +65,7 @@ public static class ContactEndpoints
                 addContact.address = newContact.Address;
                 addContact.gender_id = CmmHelper.ToInt32(newContact.GenderId);
 
-                var sql = $"insert into contact (first_name, last_name, phone, address, gender_id) values ({addContact.first_name},{addContact.last_name},{addContact.phone},{addContact.address},{addContact.gender_id})";
+                var sql = $"insert into contact (first_name, last_name, phone, address, gender_id) values ('{addContact.first_name}','{addContact.last_name}','{addContact.phone}','{addContact.address}','{addContact.gender_id}')";
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -77,9 +77,9 @@ public static class ContactEndpoints
             using (var _db = new _DbContext(connstr))
             {
                 var updatedContact = model.Contact;
-                var id = model.Contact.Id;
+                var id = int.Parse(model.Contact.Id);
 
-                var contact = _db.contacts.Where(c => c.pk_id == int.Parse(id)).FirstOrDefault();
+                var contact = _db.contacts.Where(c => c.pk_id == id).FirstOrDefault();
 
                 contact.first_name = updatedContact.FirstName;
                 contact.last_name = updatedContact.LastName;
@@ -87,7 +87,7 @@ public static class ContactEndpoints
                 contact.address = updatedContact.Address;
                 contact.gender_id = int.Parse(updatedContact.GenderId);
 
-                var sql = $"update contact set (first_name = {contact.first_name}, last_name = {contact.last_name}, phone = {contact.phone}, address = {contact.address}, gender_id = {contact.gender_id}) where pk_id = {id}";
+                var sql = $"update contact set first_name = '{contact.first_name}', last_name = '{contact.last_name}', phone = '{contact.phone}', address = '{contact.address}', gender_id = '{contact.gender_id}' where pk_id = {id}";
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 

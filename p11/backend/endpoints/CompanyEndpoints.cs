@@ -57,7 +57,7 @@ public static class CompanyEndpoints
 
                 addCompany.company_name = newCompany.CompanyName;
 
-                var sql = $"insert into company (first_name, last_name, phone, address, gender_id) values ({addCompany.company_name})";
+                var sql = $"insert into company (company_name) values ('{addCompany.company_name}');";
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -69,13 +69,13 @@ public static class CompanyEndpoints
             using (var _db = new _DbContext(connstr))
             {
                 var updatedCompany = model.Company;
-                var id = model.Company.Id;
+                var id = int.Parse(model.Company.Id);
 
-                var company = _db.companies.Where(c => c.pk_id == int.Parse(id)).FirstOrDefault();
+                var company = _db.companies.Where(c => c.pk_id == id).FirstOrDefault();
 
                 company.company_name = updatedCompany.CompanyName;
 
-                var sql = $"update company set (company_name = {company.company_name}) where pk_id = {id}";
+                var sql = $"update company set company_name = '{company.company_name}' where pk_id = {id};";
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -105,7 +105,7 @@ public static class CompanyEndpoints
             //var query = _db.companies.Where(x => x.pk_id == idInt);
             //var company = query.FirstOrDefault();
 
-            var sql = $"delete from contact where pk_id = {idInt}";
+            var sql = $"delete from company where pk_id = {idInt}";
             var result = _db.Database.ExecuteSqlRaw(sql);
             Console.WriteLine(result);
         }
