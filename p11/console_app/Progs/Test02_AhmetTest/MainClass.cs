@@ -14,15 +14,25 @@ public class MainClass
             //_db.companies.Add(comp);
             //_db.SaveChanges();
 
+            var gen = new db_lib.Tools.SqlGen();
+            gen.Add("first_name", "aaaa");
+            gen.Add("last_name", "aaaa");
+            gen.Add("phone", "aaaa");
+            gen.Add("address", "aaaa");
+            gen.Add("gender_id", "1");
 
+            var sql = gen.SqlInsert("contact");
 
-            var addCompany = new company();
-
-            addCompany.company_name = "hhh";
-
-            var sql = $"insert into company (company_name) values ({addCompany.company_name});";
             var result = _db.Database.ExecuteSqlRaw(sql);
             Console.WriteLine(result);
+
+            //var addCompany = new company();
+
+            //addCompany.company_name = "hhh";
+
+            //var sql = $"insert into company (company_name) values ({addCompany.company_name});";
+            //var result = _db.Database.ExecuteSqlRaw(sql);
+            //Console.WriteLine(result);
 
             //var sql = $"update company set (company_name = {company.company_name}) where pk_id = {id}";
             //var result = _db.Database.ExecuteSqlRaw(sql);
