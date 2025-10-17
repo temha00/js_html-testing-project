@@ -57,24 +57,14 @@ public static class ContactEndpoints
 
             using (var _db = new _DbContext(connstr))
             {
-                var addContact = new contact();
-
-                addContact.first_name = newContact.FirstName;
-                addContact.last_name = newContact.LastName;
-                addContact.phone = newContact.Phone;
-                addContact.address = newContact.Address;
-                addContact.gender_id = CmmHelper.ToInt32(newContact.GenderId);
-
-                var gen = new SqlGen();
-                gen.Add("first_name", addContact.first_name);
-                gen.Add("last_name", addContact.last_name);
-                gen.Add("phone", addContact.phone);
-                gen.Add("address", addContact.address);
+                var gen = new SqlGenerator();
+                gen.Add("first_name", newContact.FirstName);
+                gen.Add("last_name", newContact.LastName);
+                gen.Add("phone", newContact.Phone);
+                gen.Add("address", newContact.Address);
                 gen.Add("gender_id", newContact.GenderId);
 
-                var sql = gen.SqlInsert("contact");
-
-                //var sql = $"insert into contact (first_name, last_name, phone, address, gender_id) values ('{addContact.first_name}','{addContact.last_name}','{addContact.phone}','{addContact.address}','{addContact.gender_id}')";
+                var sql = gen.GetInsertSql("contact");
 
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);

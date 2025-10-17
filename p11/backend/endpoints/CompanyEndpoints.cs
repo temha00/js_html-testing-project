@@ -53,11 +53,10 @@ public static class CompanyEndpoints
 
             using (var _db = new _DbContext(connstr))
             {
-                var addCompany = new company();
+                var gen = new SqlGenerator();
+                gen.Add("company_name", newCompany.CompanyName);
 
-                addCompany.company_name = newCompany.CompanyName;
-
-                var sql = $"insert into company (company_name) values ('{addCompany.company_name}');";
+                var sql = gen.GetInsertSql("company");
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 

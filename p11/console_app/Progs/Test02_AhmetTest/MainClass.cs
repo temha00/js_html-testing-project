@@ -22,9 +22,10 @@ public class MainClass
             gen.Add("gender_id", "1");
 
             var sql = gen.SqlInsert("contact");
+            Console.WriteLine(sql);
 
-            var result = _db.Database.ExecuteSqlRaw(sql);
-            Console.WriteLine(result);
+            //var result = _db.Database.ExecuteSqlRaw(sql);
+            //Console.WriteLine(result);
 
             //var addCompany = new company();
 
