@@ -98,6 +98,7 @@ public static class ContactEndpoints
                 gen.Add(nameof(contact.gender_id), updatedContact.GenderId);
 
                 //some customer view changes made....
+                //ahmet's changes
                 //halil's changes
 
                 var sql = gen.GetUpdateSql(nameof(contact), id);
