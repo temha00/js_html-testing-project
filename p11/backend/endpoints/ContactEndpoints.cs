@@ -94,6 +94,8 @@ public static class ContactEndpoints
                 gen.Add(nameof(contact.address), updatedContact.Address);
                 gen.Add(nameof(contact.gender_id), updatedContact.GenderId);
 
+                //some customer view changes made....
+
                 var sql = gen.GetUpdateSql(nameof(contact), id);
 
                 //var sql = $"update contact set first_name = '{contact.first_name}', last_name = '{contact.last_name}', phone = '{contact.phone}', address = '{contact.address}', gender_id = '{contact.gender_id}' where pk_id = {id}";
