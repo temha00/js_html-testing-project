@@ -14,6 +14,9 @@ public static class ContactEndpoints
 
     public static List<Contact> get()
     {
+
+        //halil changes.
+
         using (var _db = new _DbContext(connstr))
         {
             var query = _db.contacts;
