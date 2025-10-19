@@ -54,9 +54,9 @@ public static class CompanyEndpoints
             using (var _db = new _DbContext(connstr))
             {
                 var gen = new SqlGenerator();
-                gen.Add("company_name", newCompany.CompanyName);
+                gen.Add(nameof(company.company_name), newCompany.CompanyName);
 
-                var sql = gen.GetInsertSql("company");
+                var sql = gen.GetInsertSql(nameof(company));
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -70,11 +70,16 @@ public static class CompanyEndpoints
                 var updatedCompany = model.Company;
                 var id = int.Parse(model.Company.Id);
 
-                var company = _db.companies.Where(c => c.pk_id == id).FirstOrDefault();
+                //var company = _db.companies.Where(c => c.pk_id == id).FirstOrDefault();
 
-                company.company_name = updatedCompany.CompanyName;
+                //company.company_name = updatedCompany.CompanyName;
 
-                var sql = $"update company set company_name = '{company.company_name}' where pk_id = {id};";
+                var gen = new SqlGenerator();
+                gen.Add(nameof(company.company_name), updatedCompany.CompanyName);
+
+                var sql = gen.GetUpdateSql(nameof(company), id);
+
+                //var sql = $"update company set company_name = '{company.company_name}' where pk_id = {id};";
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -97,14 +102,17 @@ public static class CompanyEndpoints
 
         using (var _db = new _DbContext(connstr))
         {
-
             //
             var idInt = Int32.Parse(id);
 
             //var query = _db.companies.Where(x => x.pk_id == idInt);
             //var company = query.FirstOrDefault();
 
-            var sql = $"delete from company where pk_id = {idInt}";
+            var gen = new SqlGenerator();
+
+            var sql = gen.GetDeleteSql(nameof(company), idInt);
+
+            //var sql = $"delete from company where pk_id = {idInt}";
             var result = _db.Database.ExecuteSqlRaw(sql);
             Console.WriteLine(result);
         }
