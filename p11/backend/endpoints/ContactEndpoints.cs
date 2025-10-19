@@ -10,6 +10,7 @@ public static class ContactEndpoints
     public static string connstr = CmmFuncs.CmmConnstr();
 
     //end points
+    //ahmet changes
 
     public static List<Contact> get()
     {
