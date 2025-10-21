@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using db_lib;
+using db_lib.Tools;
 using Dto;
 using Cmm;
 
@@ -53,10 +54,10 @@ public static class CompanyEndpoints
 
             using (var _db = new _DbContext(connstr))
             {
-                var gen = new SqlGenerator();
-                gen.Add(nameof(company.company_name), newCompany.CompanyName);
+                var gen = new SqlGenerator<company>();
+                gen.Add((x) => x.company_name, newCompany.CompanyName);
 
-                var sql = gen.GetInsertSql(nameof(company));
+                var sql = gen.GetInsertSql();
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -74,10 +75,10 @@ public static class CompanyEndpoints
 
                 //company.company_name = updatedCompany.CompanyName;
 
-                var gen = new SqlGenerator();
-                gen.Add(nameof(company.company_name), updatedCompany.CompanyName);
+                var gen = new SqlGenerator<company>();
+                gen.Add((x) => x.company_name, updatedCompany.CompanyName);
 
-                var sql = gen.GetUpdateSql(nameof(company), id);
+                var sql = gen.GetUpdateSql(id);
 
                 //var sql = $"update company set company_name = '{company.company_name}' where pk_id = {id};";
                 var result = _db.Database.ExecuteSqlRaw(sql);
@@ -108,9 +109,9 @@ public static class CompanyEndpoints
             //var query = _db.companies.Where(x => x.pk_id == idInt);
             //var company = query.FirstOrDefault();
 
-            var gen = new SqlGenerator();
+            var gen = new SqlGenerator<company>();
 
-            var sql = gen.GetDeleteSql(nameof(company), idInt);
+            var sql = gen.GetDeleteSql(idInt);
 
             //var sql = $"delete from company where pk_id = {idInt}";
             var result = _db.Database.ExecuteSqlRaw(sql);

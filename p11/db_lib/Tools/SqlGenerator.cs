@@ -1,9 +1,17 @@
+using System.Linq.Expressions;
 using System.Text;
 
-namespace Cmm;
+namespace db_lib.Tools;
 
-public class SqlGenerator
+public class SqlGenerator<T>
 {
+    private string _tableName;
+
+    public SqlGenerator()
+    {
+        this._tableName = typeof(T).Name;
+    }
+
     List<object> items = new List<object>();
 
     public class item
@@ -12,17 +20,17 @@ public class SqlGenerator
         public string? flddata;
     }
 
-    public void Add(string fldname, string flddata)
+    public void Add(Expression<Func<T, object>> fldExp, string flddata)
     {
-        var item = new item();
+        var fldname = CoreFuncs.GetMemberName(fldExp);
 
+        var item = new item();
         item.fldname = fldname;
         item.flddata = flddata;
-
         items.Add(item);
     }
 
-    public string GetInsertSql(string table)
+    public string GetInsertSql()
     {
         var fldnames = new StringBuilder();
         var flddatas = new StringBuilder();
@@ -30,11 +38,9 @@ public class SqlGenerator
 
         foreach (item item in items)
         {
-            fldnames.Append(item.fldname);
+            fldnames.Append($"[{item.fldname}]");
 
-            flddatas.Append('\'');
-            flddatas.Append(item.flddata);
-            flddatas.Append('\'');
+            flddatas.Append($"\'{item.flddata}\'");
 
             if (i < items.Count - 1)
             {
@@ -48,24 +54,18 @@ public class SqlGenerator
         var resultFldnames = fldnames.ToString();
         var resultFlddatas = flddatas.ToString();
 
-        var sqlString = $"insert into {table} ({resultFldnames}) values ({resultFlddatas})";
+        var sqlString = $"insert into {this._tableName} ({resultFldnames}) values ({resultFlddatas})";
         return sqlString;
     }
 
-    public string GetUpdateSql(string table, int id)
+    public string GetUpdateSql(int id)
     {
         var updateString = new StringBuilder();
         var i = 0;
 
         foreach(item item in items)
         {
-            updateString.Append(item.fldname);
-
-            updateString.Append('=');
-
-            updateString.Append('\'');
-            updateString.Append(item.flddata);
-            updateString.Append('\'');
+            updateString.Append($"[{item.fldname}] = \'{item.flddata}\'");
 
             if (i < items.Count - 1)
             {
@@ -76,14 +76,14 @@ public class SqlGenerator
         }
 
         var resultString = updateString.ToString();
-        var sqlString = $"update {table} set {resultString} where pk_id = {id}";
+        var sqlString = $"update {this._tableName} set {resultString} where pk_id = {id}";
 
         return sqlString;
     }
 
-    public string GetDeleteSql(string table, int id)
+    public string GetDeleteSql(int id)
     {
-        var sqlString = $"delete from {table} where pk_id = {id}";
+        var sqlString = $"delete from {this._tableName} where pk_id = {id}";
         return sqlString;
     }
 }

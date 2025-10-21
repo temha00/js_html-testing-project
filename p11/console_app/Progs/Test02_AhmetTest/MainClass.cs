@@ -1,6 +1,5 @@
 using db_lib;
 using db_lib.Tools;
-using Microsoft.EntityFrameworkCore;
 
 namespace CmdApp.Progs.Test02_AhmetTest;
 
@@ -15,22 +14,22 @@ public class MainClass
             //_db.companies.Add(comp);
             //_db.SaveChanges();
 
+            var gen = new SqlGenerator<contact>();
+
             //var gen = new db_lib.Tools.SqlGen();
-            //gen.Add("first_name", "aaaa");
-            //gen.Add("last_name", "aaaa");
-            //gen.Add("phone", "aaaa");
-            //gen.Add("address", "aaaa");
-            //gen.Add("gender_id", "1");
+            gen.Add(x => x.first_name, "aaaa");
+            gen.Add(x => x.last_name, "aaaa");
+            gen.Add(x => x.phone, "aaaa");
+            gen.Add(x => x.address, "aaaa");
+            gen.Add(x => x.gender_id, "1");
 
-            //var sql = gen.SqlInsert("contact");
-            //Console.WriteLine(sql);
+            var sql = gen.GetInsertSql();
+            Console.WriteLine(sql);
 
-            var gen = new SqlGen();
-            gen.Add("company_name", "aaaa");
+            //gen.Add((x) => x.company_name, "aaaa");
+            //var sql = gen.GetUpdateSql(6);
 
-            var sql = gen.GetUpdateSql("company", 6);
-
-            //var sql = gen.GetDeleteSql("company", 6);
+            //var sql = gen.GetDeleteSql(6);
             Console.WriteLine(sql);
 
             //var result = _db.Database.ExecuteSqlRaw(sql);
