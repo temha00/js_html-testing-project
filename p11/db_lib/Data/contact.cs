@@ -10,5 +10,6 @@ public class contact
     public string? phone { get; set; }
     public string? address { get; set; }
     public int? gender_id { get; set; }
+    public DateOnly? birthdate { get; set; }
     // public decimal? income { get; set; }
 }

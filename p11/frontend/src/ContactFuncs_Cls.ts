@@ -8,6 +8,7 @@ class ContactFuncs_Cls {
         let el4 = document.getElementById("input4") as HTMLInputElement;
         let el5 = document.getElementById("input5") as HTMLSelectElement;
         let el5val = this.getSelectVal(el5);
+        let el6 = document.getElementById("input6") as HTMLInputElement;
 
         let contact: Contact = {
             id: idEl.value,
@@ -15,7 +16,8 @@ class ContactFuncs_Cls {
             lastName: el2.value,
             phone: el3.value,
             address: el4.value,
-            genderId: el5val
+            genderId: el5val,
+            birthDate: el6.valueAsDate
         };
 
         this.add_or_edit_Contact(contact);
@@ -86,6 +88,7 @@ class ContactFuncs_Cls {
                 return GenderText;
             }
         });
+        gridHelper.AddColumn({ title: "Birth Date", fldName: "birthDate" });
         gridHelper.AddColumn({
             title: "Edit", funcEl: (item) => {
                 let el = $("<button type='button' class='btn btn-primary x-edit'>").get(0);
@@ -139,6 +142,7 @@ class ContactFuncs_Cls {
                 let el3 = document.getElementById("input3") as HTMLInputElement;
                 let el4 = document.getElementById("input4") as HTMLInputElement;
                 let el5 = document.getElementById("input5") as HTMLSelectElement;
+                let el6 = document.getElementById("input6") as HTMLInputElement;
 
                 idEl.value = "" + contact.id;
                 el1.value = contact.firstName;
@@ -146,6 +150,7 @@ class ContactFuncs_Cls {
                 el3.value = contact.phone;
                 el4.value = contact.address;
                 el5.value = contact.genderId;
+                el6.value = contact.birthDate.toString();
 
                 $(document).find(".modal-title").text("Edit Contact");
 
@@ -166,6 +171,7 @@ class ContactFuncs_Cls {
         let el3 = document.getElementById("input3") as HTMLInputElement;
         let el4 = document.getElementById("input4") as HTMLInputElement;
         let el5 = document.getElementById("input5") as HTMLSelectElement;
+        let el6 = document.getElementById("input6") as HTMLInputElement;
 
         idEl.value = "0";
         el1.value = "";
@@ -173,6 +179,7 @@ class ContactFuncs_Cls {
         el3.value = "";
         el4.value = "";
         el5.value = "0";
+        el6.value = "0";
 
         $(document).find(".modal-title").text("New Contact");
 

@@ -6,6 +6,7 @@ interface Contact {
     address?: string;
     phone?: string;
     genderId?: string;
+    birthDate?: Date;
 }
 
 interface Company {
@@ -26,7 +27,6 @@ toastr.options = {
     positionClass: "toast-bottom-right",
     timeOut: 2000,
 };
-
 
 //show modal form
 function showModal() {

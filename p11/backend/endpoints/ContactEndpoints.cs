@@ -3,6 +3,7 @@ using Dto;
 using db_lib;
 using db_lib.Tools;
 using Cmm;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace endpoints;
 
@@ -37,6 +38,7 @@ public static class ContactEndpoints
                 Phone = c.phone,
                 Address = c.address,
                 GenderId = c.gender_id.ToString(),
+                BirthDate = c.birthdate.ToString()
             }).ToList();
 
             return contactsSent;
@@ -68,6 +70,7 @@ public static class ContactEndpoints
                 gen.Add((x) => x.phone, newContact.Phone);
                 gen.Add((x) => x.address, newContact.Address);
                 gen.Add((x) => x.gender_id, newContact.GenderId);
+                gen.Add((x) => x.birthdate, newContact.BirthDate);
 
                 var sql = gen.GetInsertSql();
 
@@ -98,6 +101,7 @@ public static class ContactEndpoints
                 gen.Add((x) => x.phone, updatedContact.Phone);
                 gen.Add((x) => x.address, updatedContact.Address);
                 gen.Add((x) => x.gender_id, updatedContact.GenderId);
+                gen.Add((x) => x.birthdate, updatedContact.BirthDate);
 
                 //some customer view changes made....
                 //ahmet's changes
