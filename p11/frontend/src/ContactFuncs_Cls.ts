@@ -11,13 +11,13 @@ class ContactFuncs_Cls {
         let el6 = document.getElementById("input6") as HTMLInputElement;
 
         let contact: Contact = {
-            id: idEl.value,
-            firstName: el1.value,
-            lastName: el2.value,
-            phone: el3.value,
-            address: el4.value,
-            genderId: el5val,
-            birthDate: el6.valueAsDate
+            Id: idEl.value,
+            FirstName: el1.value,
+            LastName: el2.value,
+            Phone: el3.value,
+            Address: el4.value,
+            GenderId: el5val,
+            BirthDate: el6.valueAsDate
         };
 
         this.add_or_edit_Contact(contact);
@@ -77,23 +77,23 @@ class ContactFuncs_Cls {
 
         let gridHelper = new GridHelper.MainClass<Contact>();
         gridHelper.SetData(contacts)
-        gridHelper.AddColumn({ title: "Id", fldName: "id" });
-        gridHelper.AddColumn({ title: "First Name", fldName: "firstName" });
-        gridHelper.AddColumn({ title: "Last Name", fldName: "lastName" });
-        gridHelper.AddColumn({ title: "Phone Number", fldName: "phone" });
-        gridHelper.AddColumn({ title: "Address", fldName: "address" });
+        gridHelper.AddColumn({ title: "Id", fldName: "Id" });
+        gridHelper.AddColumn({ title: "First Name", fldName: "FirstName" });
+        gridHelper.AddColumn({ title: "Last Name", fldName: "LastName" });
+        gridHelper.AddColumn({ title: "Phone Number", fldName: "Phone" });
+        gridHelper.AddColumn({ title: "Address", fldName: "Address" });
         gridHelper.AddColumn({
             title: "Gender", funcString: (item) => {
-                let GenderText = this.getContactGenderText(item.genderId);
+                let GenderText = this.getContactGenderText(item.GenderId);
                 return GenderText;
             }
         });
-        gridHelper.AddColumn({ title: "Birth Date", fldName: "birthDate" });
+        gridHelper.AddColumn({ title: "Birth Date", fldName: "BirthDate", type: "D" });
         gridHelper.AddColumn({
             title: "Edit", funcEl: (item) => {
                 let el = $("<button type='button' class='btn btn-primary x-edit'>").get(0);
                 el.onclick = () => {
-                    this.openContactEdit(item.id);
+                    this.openContactEdit(item.Id);
                 }
                 return el;
             }
@@ -102,7 +102,7 @@ class ContactFuncs_Cls {
             title: "Remove", funcEl: (item) => {
                 let el = $("<button type='button' class='btn btn-danger x-delete'>").get(0);
                 el.onclick = () => {
-                    this.deleteContact(item.id);
+                    this.deleteContact(item.Id);
                 }
                 return el;
             }
@@ -132,7 +132,7 @@ class ContactFuncs_Cls {
             dataType: null,
             success: (contacts: Contact[]) => {
 
-                let contact = contacts.filter(x => x.id == itemId)[0];
+                let contact = contacts.filter(x => x.Id == itemId)[0];
                 console.log(contact)
 
                 //
@@ -144,13 +144,13 @@ class ContactFuncs_Cls {
                 let el5 = document.getElementById("input5") as HTMLSelectElement;
                 let el6 = document.getElementById("input6") as HTMLInputElement;
 
-                idEl.value = "" + contact.id;
-                el1.value = contact.firstName;
-                el2.value = contact.lastName;
-                el3.value = contact.phone;
-                el4.value = contact.address;
-                el5.value = contact.genderId;
-                el6.value = contact.birthDate.toString();
+                idEl.value = "" + contact.Id;
+                el1.value = contact.FirstName;
+                el2.value = contact.LastName;
+                el3.value = contact.Phone;
+                el4.value = contact.Address;
+                el5.value = contact.GenderId;
+                el6.value = contact.BirthDate.toString();
 
                 $(document).find(".modal-title").text("Edit Contact");
 

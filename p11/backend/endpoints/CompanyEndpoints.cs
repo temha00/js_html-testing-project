@@ -55,7 +55,7 @@ public static class CompanyEndpoints
             using (var _db = new _DbContext(connstr))
             {
                 var gen = new SqlGenerator<company>();
-                gen.Add((x) => x.company_name, newCompany.CompanyName);
+                gen.Add(x => x.company_name, newCompany.CompanyName);
 
                 var sql = gen.GetInsertSql();
                 var result = _db.Database.ExecuteSqlRaw(sql);
@@ -76,7 +76,7 @@ public static class CompanyEndpoints
                 //company.company_name = updatedCompany.CompanyName;
 
                 var gen = new SqlGenerator<company>();
-                gen.Add((x) => x.company_name, updatedCompany.CompanyName);
+                gen.Add(x => x.company_name, updatedCompany.CompanyName);
 
                 var sql = gen.GetUpdateSql(id);
 

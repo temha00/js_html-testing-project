@@ -30,6 +30,16 @@ public class SqlGenerator<T>
         items.Add(item);
     }
 
+    public void Add(Expression<Func<T, object>> fldExp, DateTime? flddata)
+    {
+        var fldname = CoreFuncs.GetMemberName(fldExp);
+
+        var item = new item();
+        item.fldname = fldname;
+        item.flddata = flddata.ToString();
+        items.Add(item);
+    }
+
     public string GetInsertSql()
     {
         var fldnames = new StringBuilder();

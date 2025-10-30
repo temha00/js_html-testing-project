@@ -28,7 +28,32 @@ public class Program
         app.UseCors("AllowAll");
 
         //
-        app.MapGet("/api/contact", ContactEndpoints.get);
+        //app.MapGet("/api/contact", ContactEndpoints.get);
+        app.MapGet("/api/contact", async (HttpRequest request) =>
+        {
+            try
+            {
+                using var reader = new StreamReader(request.Body);
+                string bodyAsString = await reader.ReadToEndAsync();
+                Console.WriteLine(bodyAsString);
+
+                var respData = ContactEndpoints.get();
+                //return Results.Ok(respData);
+
+                var jsonText = JsonConvert.SerializeObject(respData, Formatting.Indented, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddTHH:mm:ss.fff" });
+                Console.WriteLine(jsonText);
+                return Results.Content(jsonText, "application/json");
+            }
+            catch (Exception ex)
+            {
+                var respData = new RespData_cmm();
+                respData.Error = ex.Message;
+                respData.ErrorTrace = ex.StackTrace?.ToString();
+                return Results.Ok(respData);
+            }
+
+        });
+
         app.MapPost("/api/contact", async (HttpRequest request) =>
         {
             try

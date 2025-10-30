@@ -1,1 +1,2 @@
-http-server
+call tsc
+call http-server

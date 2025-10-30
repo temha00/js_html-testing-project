@@ -9,5 +9,5 @@ public class Contact
     public string? Phone { get; set; }
     public string? Address { get; set; }
     public string? GenderId { get; set; }
-    public string? BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 }

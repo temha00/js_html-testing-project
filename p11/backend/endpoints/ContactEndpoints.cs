@@ -38,7 +38,7 @@ public static class ContactEndpoints
                 Phone = c.phone,
                 Address = c.address,
                 GenderId = c.gender_id.ToString(),
-                BirthDate = c.birthdate.ToString()
+                BirthDate = c.birthdate
             }).ToList();
 
             return contactsSent;
@@ -64,16 +64,17 @@ public static class ContactEndpoints
 
             using (var _db = new _DbContext(connstr))
             {
+                //
                 var gen = new SqlGenerator<contact>();
-                gen.Add((x) => x.first_name, newContact.FirstName);
-                gen.Add((x) => x.last_name, newContact.LastName);
-                gen.Add((x) => x.phone, newContact.Phone);
-                gen.Add((x) => x.address, newContact.Address);
-                gen.Add((x) => x.gender_id, newContact.GenderId);
-                gen.Add((x) => x.birthdate, newContact.BirthDate);
+                gen.Add(x => x.first_name, newContact.FirstName);
+                gen.Add(x => x.last_name, newContact.LastName);
+                gen.Add(x => x.phone, newContact.Phone);
+                gen.Add(x => x.address, newContact.Address);
+                gen.Add(x => x.gender_id, newContact.GenderId);
+                gen.Add(x => x.birthdate, newContact.BirthDate);
 
+                //
                 var sql = gen.GetInsertSql();
-
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -86,30 +87,22 @@ public static class ContactEndpoints
             {
                 var updatedContact = model.Contact;
                 var id = int.Parse(model.Contact.Id);
-
-                //var contact = _db.contacts.Where(c => c.pk_id == id).FirstOrDefault();
-
-                //contact.first_name = updatedContact.FirstName;
-                //contact.last_name = updatedContact.LastName;
-                //contact.phone = updatedContact.Phone;
-                //contact.address = updatedContact.Address;
-                //contact.gender_id = int.Parse(updatedContact.GenderId);
-           
+                
+                //
                 var gen = new SqlGenerator<contact>();
-                gen.Add((x) => x.first_name, updatedContact.FirstName);
-                gen.Add((x) => x.last_name, updatedContact.LastName);
-                gen.Add((x) => x.phone, updatedContact.Phone);
-                gen.Add((x) => x.address, updatedContact.Address);
-                gen.Add((x) => x.gender_id, updatedContact.GenderId);
-                gen.Add((x) => x.birthdate, updatedContact.BirthDate);
+                gen.Add(x => x.first_name, updatedContact.FirstName);
+                gen.Add(x => x.last_name, updatedContact.LastName);
+                gen.Add(x => x.phone, updatedContact.Phone);
+                gen.Add(x => x.address, updatedContact.Address);
+                gen.Add(x => x.gender_id, updatedContact.GenderId);
+                gen.Add(x => x.birthdate, updatedContact.BirthDate);
 
                 //some customer view changes made....
                 //ahmet's changes
                 //halil's changes
 
+                //
                 var sql = gen.GetUpdateSql(id);
-
-                //var sql = $"update contact set first_name = '{contact.first_name}', last_name = '{contact.last_name}', phone = '{contact.phone}', address = '{contact.address}', gender_id = '{contact.gender_id}' where pk_id = {id}";
                 var result = _db.Database.ExecuteSqlRaw(sql);
                 Console.WriteLine(result);
 
@@ -139,8 +132,6 @@ public static class ContactEndpoints
             var gen = new SqlGenerator<contact>();
 
             var sql = gen.GetDeleteSql(idInt);
-
-            //var sql = $"delete from contact where pk_id = {idInt}";
             var result = _db.Database.ExecuteSqlRaw(sql);
             Console.WriteLine(result);
 

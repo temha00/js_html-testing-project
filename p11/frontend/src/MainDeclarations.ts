@@ -1,12 +1,12 @@
 //for creating contact array and objects
 interface Contact {
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    address?: string;
-    phone?: string;
-    genderId?: string;
-    birthDate?: Date;
+    Id?: string;
+    FirstName?: string;
+    LastName?: string;
+    Address?: string;
+    Phone?: string;
+    GenderId?: string;
+    BirthDate?: Date;
 }
 
 interface Company {

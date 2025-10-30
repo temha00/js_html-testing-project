@@ -4,7 +4,8 @@ namespace GridHelper {
         title?: string,
         fldName?: Extract<keyof T, string>,
         funcEl?: (item: T) => HTMLElement,
-        funcString?: (item: T) => string;
+        funcString?: (item: T) => string,
+        type?: "T" | "N" | "D" | "B"
     }
 
     export class MainClass<T> {
@@ -46,7 +47,11 @@ namespace GridHelper {
                         elTableRowData.innerText = col.funcString(item);
                     } else if (col.fldName) {
                         let value = (item as any)[col.fldName];
-                        elTableRowData.innerText = value;
+                        if (col.type == "D") {
+                            elTableRowData.innerText = this.GetDateTimeString(value)
+                        } else {
+                            elTableRowData.innerText = value;
+                        }
                     } else {
                         elTableRowData.innerText = '$error$';
                     }
@@ -59,6 +64,19 @@ namespace GridHelper {
 
             return tableEl;
 
+        }
+
+        private GetDateTimeString(value: any): string {
+            if (!value)
+                return "";
+
+            let strVal = (value as string);
+
+            let year = strVal.substring(0, 4);
+            let month = strVal.substring(5, 7);
+            let day = strVal.substring(8, 10);
+
+            return `${day}.${month}.${year}`;
         }
     }
 }
